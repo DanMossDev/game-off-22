@@ -20,10 +20,17 @@ public class PlayerController : MonoBehaviour
     [Tooltip("The rate at which the character rotates towards their forward movement direction")][SerializeField]
     float rotationSpeed = 360;
 
+    [Tooltip("Transform from which to check if the player is grounded")][SerializeField]
+    Transform feet;
+
+    [Tooltip("Layers which will be considered as grounded, i.e. things you can jump off")][SerializeField]
+    LayerMask ground;
+
     Rigidbody rigidBody;
     float horizontalInput;
     float verticalInput;
     bool hitStunned = false;
+    [HideInInspector] public bool isGrounded = true;
 
     void Start()
     {
@@ -32,8 +39,9 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        isGrounded = Physics.CheckSphere(feet.position, 0.1f, ground);
         if (horizontalInput == 0 && verticalInput == 0) {
-            rigidBody.drag = stoppingDrag;
+            if (isGrounded) rigidBody.drag = stoppingDrag;
             return;
         }
         Movement();
@@ -48,17 +56,18 @@ public class PlayerController : MonoBehaviour
 
     void OnJump()
     {
+        if (!isGrounded) return;
         float impulse = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x, impulse, rigidBody.velocity.z);
+        rigidBody.AddForce(new Vector3(0, impulse, 0), ForceMode.Impulse);
     }
 
     void Movement()
     {
-        if (horizontalInput == 0) rigidBody.velocity = new Vector3(rigidBody.velocity.x * 0.9f, rigidBody.velocity.y, rigidBody.velocity.z);
-        else if (verticalInput == 0) rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, rigidBody.velocity.z * 0.9f);
+        if (horizontalInput == 0 || Mathf.Sign(rigidBody.velocity.x) != Mathf.Sign(horizontalInput)) rigidBody.velocity = new Vector3(rigidBody.velocity.x * 0.9f, rigidBody.velocity.y, rigidBody.velocity.z);
+        else if (verticalInput == 0 || Mathf.Sign(rigidBody.velocity.z) != Mathf.Sign(verticalInput)) rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, rigidBody.velocity.z * 0.9f);
         
         rigidBody.drag = friction;
-        rigidBody.AddForce(horizontalInput * acceleration, 0, verticalInput * acceleration);
+        rigidBody.AddForce(new Vector3(horizontalInput * acceleration, 0, verticalInput * acceleration), ForceMode.Force);
     }
 
     void Rotate()
