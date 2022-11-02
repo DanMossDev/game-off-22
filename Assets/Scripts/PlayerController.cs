@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Tooltip("Height the character can jump in units")][SerializeField]
+    float jumpHeight = 3;
+
     [Tooltip("Rate at which the player accelerates")][SerializeField]
     float acceleration = 10;
 
@@ -27,7 +30,7 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (horizontalInput == 0 && verticalInput == 0) {
             rigidBody.drag = stoppingDrag;
@@ -37,16 +40,22 @@ public class PlayerController : MonoBehaviour
         Rotate();
     }
 
-    public void OnMove(InputValue value)
+    void OnMove(InputValue value)
     {
         horizontalInput = value.Get<Vector2>().x;
         verticalInput = value.Get<Vector2>().y;
     }
 
+    void OnJump()
+    {
+        float impulse = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, impulse, rigidBody.velocity.z);
+    }
+
     void Movement()
     {
-        // if (horizontalInput == 0) rigidBody.velocity = new Vector3(rigidBody.velocity.x * 0.9f, rigidBody.velocity.y, rigidBody.velocity.z);
-        // else if (verticalInput == 0) rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, rigidBody.velocity.z * 0.9f);
+        if (horizontalInput == 0) rigidBody.velocity = new Vector3(rigidBody.velocity.x * 0.9f, rigidBody.velocity.y, rigidBody.velocity.z);
+        else if (verticalInput == 0) rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, rigidBody.velocity.z * 0.9f);
         
         rigidBody.drag = friction;
         rigidBody.AddForce(horizontalInput * acceleration, 0, verticalInput * acceleration);
