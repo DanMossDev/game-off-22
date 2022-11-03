@@ -41,6 +41,11 @@ public class PowerUps : MonoBehaviour
         }
     }
 
+    public void StopToast()
+    {
+        StopAllCoroutines();
+    }
+
     IEnumerator EatToast()
     {
         hasToast = true;

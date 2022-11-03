@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
         if ((hazard & 1 << other.gameObject.layer) != 1 << other.gameObject.layer) return;
         rigidBody.AddForce((other.contacts[0].normal + Vector3.up) * hitBounce, ForceMode.Impulse);
         hitStunned = true;
+        PowerUps.Instance.StopToast();
         StartCoroutine(EndHitstun());
     }
 
