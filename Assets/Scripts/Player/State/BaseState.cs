@@ -11,7 +11,7 @@ public class BaseState : PlayerState
     }
     public override void UpdateState(PlayerController context) 
     {
-        if (Physics.CheckSphere(context.feet.position, 0.1f, context.ground)) 
+        if (Physics.OverlapSphere(context.feet.position, 0.2f, context.ground).Length != 0) 
         {
             context.isGrounded = true;
             context.lastGroundedTime = Time.time;
@@ -35,7 +35,6 @@ public class BaseState : PlayerState
         
         Vector3 movement = new Vector3(context.horizontalInput * context.acceleration * (30 / (Mathf.Abs(context.rigidBody.velocity.x) + 10)), 0, context.verticalInput * context.acceleration * (30 / (Mathf.Abs(context.rigidBody.velocity.z) + 10)));
 
-        if (!context.isGrounded) movement *= 0.6f;
         context.rigidBody.AddForce(movement, ForceMode.Force);
     }
 

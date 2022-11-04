@@ -11,14 +11,13 @@ public class DiveState : PlayerState
 
         Vector3 diveBurst;
         if (context.horizontalInput == 0 && context.verticalInput == 0) diveBurst = context.transform.forward;
-        else diveBurst = new Vector3(context.horizontalInput, 0, context.verticalInput);
+        else diveBurst = new Vector3(context.horizontalInput, 0, context.verticalInput).normalized;
 
         context.rigidBody.AddForce(diveBurst * context.diveForce * 40 / (Mathf.Abs(context.rigidBody.velocity.magnitude) + 10), ForceMode.Impulse);
     }
     public override void UpdateState(PlayerController context) 
     {
-        Debug.Log(Physics.CheckSphere(context.belly.position, 0.1f, context.ground));
-        if (Physics.CheckSphere(context.belly.position, 0.1f, context.ground)) 
+        if (Physics.OverlapSphere(context.belly.position, 0.2f, context.ground).Length != 0) 
         {
             context.isGrounded = true;
             context.lastGroundedTime = Time.time;

@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask ground;
     [Tooltip("Layers which will be considered as hazards, i.e. things on the stage that hurt you")]
     public LayerMask hazard;
+    [Tooltip("Layers which the homing attack will target")]
+    public LayerMask homingTargets;
 
 
     [HideInInspector] public Rigidbody rigidBody;
@@ -40,7 +42,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public float verticalInput;
     [HideInInspector] public bool hitStunned = false;
     [HideInInspector] public bool isGrounded = true;
-    [HideInInspector] public bool isDiving = false;
+    [HideInInspector] public bool isInvincible = true;
 
     public float? lastGroundedTime;
     public float? jumpPressedTime;
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public PlayerState currentState;
     [HideInInspector] public BaseState baseState = new BaseState();
     [HideInInspector] public DiveState diveState = new DiveState();
+    [HideInInspector] public AttackState attackState = new AttackState();
 
 
     public static PlayerController Instance {get; private set;}
@@ -97,8 +100,28 @@ public class PlayerController : MonoBehaviour
         if (currentState != diveState) ChangeState(diveState);
     }
 
+    void OnAttack()
+    {
+        if (isGrounded) return;
+        ChangeState(attackState);
+    }
+
     void OnCollisionEnter(Collision other) {
-        if ((hazard & 1 << other.gameObject.layer) != 1 << other.gameObject.layer) return;
+        if ((ground & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) return;
+        if ((hazard & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) {
+            TakeDamage(other);
+        }
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && currentState != attackState && !isInvincible) TakeDamage(other);
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && currentState == attackState)
+        {
+            //Damage enemy - probably something like other.gameObject.GetComponent<EnemyController>().TakeDamage();
+            ChangeState(baseState);
+        }
+    }
+
+    void TakeDamage(Collision other)
+    {
         if (currentState != baseState) ChangeState(baseState);
         rigidBody.AddForce((other.contacts[0].normal + Vector3.up) * hitBounce, ForceMode.Impulse);
         hitStunned = true;
@@ -115,5 +138,16 @@ public class PlayerController : MonoBehaviour
                 hitStunned = false;
             }
         }
+    }
+
+    public void EndInvincibility()
+    {
+        StartCoroutine(EndInvincibilityDelay());
+    }
+
+    IEnumerator EndInvincibilityDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isInvincible = false;
     }
 }
