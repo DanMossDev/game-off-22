@@ -8,8 +8,12 @@ public class PlayerController : MonoBehaviour
     [Space][Header("Player Movement Variables")]
     [Tooltip("Height the character can jump in units")]
     public float jumpHeight = 3;
-    [Tooltip("Force added to the player when diving")]
+    [Tooltip("Force added to the player when diving while moving")]
     public float diveForce = 20;
+    [Tooltip("Maximum amount the dive can be charged while stationary")]
+    public float maxDiveCharge = 0;
+    [Tooltip("Rate at which the dive charges")]
+    public float chargeRate = 0;
     [Tooltip("Rate at which the player accelerates")]
     public float acceleration = 10;
     [Tooltip("Ratio by which your speed decreases when not inputting - lower is a greater reduction")][Range(0, 1)]
@@ -41,6 +45,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public HPManager hitPoints;
     [HideInInspector] public float horizontalInput;
     [HideInInspector] public float verticalInput;
+    [HideInInspector] public float diveCharge = 0;
     [HideInInspector] public bool hitStunned = false;
     [HideInInspector] public bool isGrounded = true;
     [HideInInspector] public bool isInvincible = false;
@@ -52,6 +57,7 @@ public class PlayerController : MonoBehaviour
     //States
     [HideInInspector] public PlayerState currentState;
     [HideInInspector] public BaseState baseState = new BaseState();
+    [HideInInspector] public ChargeState chargeState = new ChargeState();
     [HideInInspector] public DiveState diveState = new DiveState();
     [HideInInspector] public AttackState attackState = new AttackState();
 
@@ -97,9 +103,10 @@ public class PlayerController : MonoBehaviour
         if (currentState == diveState && isGrounded) ChangeState(baseState);
     }
 
-    void OnDive()
+    void OnDive(InputValue value)
     {
-        if (currentState != diveState) ChangeState(diveState);
+        if ((currentState != diveState && rigidBody.velocity.magnitude > 5) || value.Get<float>() == 0) ChangeState(diveState);
+        else if (value.Get<float>() == 1) ChangeState(chargeState);
     }
 
     void OnAttack()

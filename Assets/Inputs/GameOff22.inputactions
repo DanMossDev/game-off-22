@@ -43,12 +43,12 @@
                 },
                 {
                     "name": "Dive",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "b34d7f9e-549b-4505-bb9f-c4043a2c3649",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Attack",
