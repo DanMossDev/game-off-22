@@ -38,11 +38,12 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Rigidbody rigidBody;
     [HideInInspector] public CapsuleCollider capColl;
     [HideInInspector] public BoxCollider boxColl;
+    [HideInInspector] public HPManager hitPoints;
     [HideInInspector] public float horizontalInput;
     [HideInInspector] public float verticalInput;
     [HideInInspector] public bool hitStunned = false;
     [HideInInspector] public bool isGrounded = true;
-    [HideInInspector] public bool isInvincible = true;
+    [HideInInspector] public bool isInvincible = false;
 
     public float? lastGroundedTime;
     public float? jumpPressedTime;
@@ -61,13 +62,14 @@ public class PlayerController : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
-    }
-    void Start()
-    {
+
         rigidBody = GetComponent<Rigidbody>();
         capColl = GetComponent<CapsuleCollider>();
         boxColl = GetComponent<BoxCollider>();
-
+        hitPoints = GetComponent<HPManager>();
+    }
+    void Start()
+    {
         currentState = baseState;
     }
 
@@ -112,21 +114,23 @@ public class PlayerController : MonoBehaviour
             TakeDamage(other);
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && currentState != attackState && !isInvincible) TakeDamage(other);
-        else if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && currentState == attackState)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && !isInvincible) TakeDamage(other);
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && (currentState == attackState || currentState == diveState))
         {
-            //Damage enemy - probably something like other.gameObject.GetComponent<EnemyController>().TakeDamage();
+            other.gameObject.GetComponent<HPManager>().TakeDamage();
             ChangeState(baseState);
         }
     }
 
-    void TakeDamage(Collision other)
+    public void TakeDamage(Collision other)
     {
+        hitPoints.TakeDamage();
         if (currentState != baseState) ChangeState(baseState);
         rigidBody.AddForce((other.contacts[0].normal + Vector3.up) * hitBounce, ForceMode.Impulse);
         hitStunned = true;
         PowerUps.Instance.StopToast();
-        StartCoroutine(EndHitstun());
+
+        if (hitPoints.currentHP > 0) StartCoroutine(EndHitstun());
     }
 
     IEnumerator EndHitstun()

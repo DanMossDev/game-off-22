@@ -6,6 +6,7 @@ public class DiveState : PlayerState
 {
     public override void EnterState(PlayerController context) 
     {
+        context.isInvincible = true;
         context.boxColl.enabled = true;
         context.capColl.enabled = false;
 
@@ -26,7 +27,11 @@ public class DiveState : PlayerState
         Movement(context);
         Rotate(context);
     }
-    public override void LeaveState(PlayerController context) {}
+    public override void LeaveState(PlayerController context) 
+    {
+        
+        context.isInvincible = false;
+    }
 
     void Movement(PlayerController context)
     {   
