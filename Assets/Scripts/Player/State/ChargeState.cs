@@ -21,6 +21,7 @@ public class ChargeState : PlayerState
 
     void Rotate(PlayerController context)
     {
+        if (context.horizontalInput == 0 && context.verticalInput == 0) return;
         Quaternion toRotation = Quaternion.LookRotation(new Vector3(context.horizontalInput, 0, context.verticalInput), Vector3.up);
         context.transform.rotation = Quaternion.RotateTowards(context.transform.rotation, toRotation, context.rotationSpeed * 2 * Time.deltaTime);
     }

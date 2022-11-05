@@ -37,8 +37,6 @@ public class AttackState : PlayerState
     public override void UpdateState(PlayerController context) 
     {
         Rotate(context);
-        // Transform graphics = context.GetComponentInChildren<MeshRenderer>().transform;
-        // graphics.rotation.Set(graphics.rotation.x + 1, graphics.rotation.y, graphics.rotation.z, graphics.rotation.w);
         if (Time.time - initTime < 0.5f) return;
         if (Time.time - initTime >= 3) {
             context.ChangeState(context.baseState);
@@ -56,7 +54,6 @@ public class AttackState : PlayerState
     public override void LeaveState(PlayerController context) 
     {
         context.rigidBody.useGravity = true;
-        //context.GetComponentInChildren<MeshRenderer>().transform.rotation.Set(0, 0, 0, 0);
         context.EndInvincibility();
     }
 

@@ -32,17 +32,16 @@ public class DiveState : PlayerState
         Movement(context);
         Rotate(context);
     }
-    public override void LeaveState(PlayerController context) 
+    public override void LeaveState(PlayerController context)
     {
-        
         context.isInvincible = false;
     }
 
     void Movement(PlayerController context)
     {   
         Vector3 movement = new Vector3(context.horizontalInput, 0, context.verticalInput).normalized;
-
-        context.rigidBody.velocity = context.rigidBody.velocity.magnitude * movement;
+        if (Utils.CompareVector3(movement, context.rigidBody.velocity.normalized, 0.2f)) return;
+        context.rigidBody.AddForce(movement * context.acceleration / 4, ForceMode.Force);
     }
 
     void Rotate(PlayerController context)

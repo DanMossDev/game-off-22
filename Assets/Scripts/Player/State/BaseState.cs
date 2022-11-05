@@ -49,7 +49,7 @@ public class BaseState : PlayerState
         context.jumpPressedTime = null;
         context.lastGroundedTime = null;
         float impulse = Mathf.Sqrt(context.jumpHeight * -2 * Physics.gravity.y);
-        context.rigidBody.AddForce(new Vector3(0, impulse, 0), ForceMode.Impulse);
+        context.rigidBody.AddForce(new Vector3(0, impulse, 0), ForceMode.VelocityChange);
     }
     
 }

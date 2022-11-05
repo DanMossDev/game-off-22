@@ -105,8 +105,9 @@ public class PlayerController : MonoBehaviour
 
     void OnDive(InputValue value)
     {
-        if ((currentState != diveState && rigidBody.velocity.magnitude > 5) || value.Get<float>() == 0) ChangeState(diveState);
-        else if (value.Get<float>() == 1) ChangeState(chargeState);
+        if ((currentState != diveState && rigidBody.velocity.magnitude > 5)) ChangeState(diveState);
+        else if (value.Get<float>() == 1 && rigidBody.velocity.magnitude <= 5) ChangeState(chargeState);
+        else if (value.Get<float>() == 0 && currentState == chargeState) ChangeState(diveState);
     }
 
     void OnAttack()
