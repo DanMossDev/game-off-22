@@ -29,6 +29,22 @@ public class BaseState : PlayerState
     public override void LeaveState(PlayerController context) 
     {}
 
+    public override void OnDive(PlayerController context, bool isPressed)
+    {
+        if (context.rigidBody.velocity.magnitude > 5 || !context.isGrounded) context.ChangeState(context.diveState);
+        else if (context.isGrounded && context.rigidBody.velocity.magnitude <= 5) context.ChangeState(context.chargeState);
+    }
+
+    public override void OnAttack(PlayerController context)
+    {
+        if (!context.isGrounded && context.canAttack) context.ChangeState(context.attackState);
+    }
+
+    public override void OnCollision(PlayerController context, Collision other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && !context.isInvincible) context.TakeDamage(other);
+    }
+
     void Movement(PlayerController context)
     {
         if (context.horizontalInput == 0 || Mathf.Sign(context.rigidBody.velocity.x) != Mathf.Sign(context.horizontalInput)) context.rigidBody.velocity = new Vector3(context.rigidBody.velocity.x * context.stoppingDrag, context.rigidBody.velocity.y, context.rigidBody.velocity.z);
@@ -52,5 +68,5 @@ public class BaseState : PlayerState
         float impulse = Mathf.Sqrt(context.jumpHeight * -2 * Physics.gravity.y);
         context.rigidBody.AddForce(new Vector3(0, impulse, 0), ForceMode.VelocityChange);
     }
-    
+
 }

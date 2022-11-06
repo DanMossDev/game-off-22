@@ -34,7 +34,21 @@ public class DiveState : PlayerState
     }
     public override void LeaveState(PlayerController context)
     {
-        context.isInvincible = false;
+        context.EndInvincibility();
+    }
+
+    public override void OnDive(PlayerController context, bool isPressed)
+    {}
+    public override void OnAttack(PlayerController context)
+    {}
+    public override void OnCollision(PlayerController context, Collision other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            other.gameObject.GetComponent<HPManager>().TakeDamage();
+            context.rigidBody.AddForce((other.contacts[0].normal + Vector3.up) * context.hitBounce, ForceMode.VelocityChange);
+            context.ChangeState(context.baseState);
+        }
     }
 
     void Movement(PlayerController context)

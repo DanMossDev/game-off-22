@@ -19,6 +19,22 @@ public class ChargeState : PlayerState
     }
     public override void LeaveState(PlayerController context) {}
 
+    public override void OnDive(PlayerController context, bool isPressed)
+    {
+        context.ChangeState(context.diveState);
+    }
+
+    public override void OnAttack(PlayerController context)
+    {}
+
+    public override void OnCollision(PlayerController context, Collision other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            other.gameObject.GetComponent<HPManager>().TakeDamage();
+        }
+    }
+
     void Rotate(PlayerController context)
     {
         if (context.horizontalInput == 0 && context.verticalInput == 0) return;

@@ -112,29 +112,22 @@ public class PlayerController : MonoBehaviour
 
     void OnDive(InputValue value)
     {
-        if ((currentState == baseState && rigidBody.velocity.magnitude > 5 && isGrounded)) ChangeState(diveState);
-        else if (value.Get<float>() == 1 && rigidBody.velocity.magnitude <= 5) ChangeState(chargeState);
-        else if (value.Get<float>() == 0 && currentState == chargeState) ChangeState(diveState);
+        currentState.OnDive(this, value.Get<float>() == 1);
     }
 
     void OnAttack()
     {
-        if (isGrounded || currentState != baseState || !canAttack) return;
-        ChangeState(attackState);
+        currentState.OnAttack(this);
     }
 
     void OnCollisionEnter(Collision other) {
         if ((ground & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) return;
         if ((hazard & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) {
             TakeDamage(other);
+            return;
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && !isInvincible) TakeDamage(other);
-        else if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && (currentState == attackState || currentState == diveState))
-        {
-            other.gameObject.GetComponent<HPManager>().TakeDamage();
-            ChangeState(baseState);
-        }
+        currentState.OnCollision(this, other);
     }
 
     public void TakeDamage(Collision other)

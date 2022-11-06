@@ -45,5 +45,6 @@ public class EnemyController : MonoBehaviour
 public enum EnemyBehaviour {
     Aggressive,
     Fearful,
-    Distant
+    Distant,
+    Ignorant
 }
