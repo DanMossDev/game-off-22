@@ -26,7 +26,7 @@ public class HPManager : MonoBehaviour
         if (currentHP < MaxHP) currentHP++;
     }
 
-    void Die()
+    public void Die()
     {
         //SFXController.Instance.PlaySFX(deathSound);
         if (gameObject.name == "Player") LevelManager.Instance.GameOver(GameOvers.Death);
