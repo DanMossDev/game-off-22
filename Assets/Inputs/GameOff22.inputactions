@@ -45,7 +45,7 @@
                     "name": "Dive",
                     "type": "Value",
                     "id": "b34d7f9e-549b-4505-bb9f-c4043a2c3649",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)",
                     "initialStateCheck": true

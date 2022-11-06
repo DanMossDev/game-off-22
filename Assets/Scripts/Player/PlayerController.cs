@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
+        isInvincible = false;
         currentState = baseState;
     }
 
