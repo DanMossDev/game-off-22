@@ -15,6 +15,7 @@ public class BaseState : PlayerState
         {
             context.isGrounded = true;
             context.lastGroundedTime = Time.time;
+            context.canAttack = true;
         } else context.isGrounded = false;
         if (Time.time - context.lastGroundedTime <= context.coyoteTime && Time.time - context.jumpPressedTime <= context.coyoteTime) Jump(context);
         if (context.hitStunned) return;

@@ -8,6 +8,7 @@ public class AttackState : PlayerState
     float initTime;
     public override void EnterState(PlayerController context) 
     {
+        context.canAttack = false;
         Vector3 aimDirection;
         if (context.horizontalInput == 0 && context.verticalInput == 0) aimDirection = context.transform.forward;
         else aimDirection = new Vector3(context.horizontalInput, 0, context.verticalInput);

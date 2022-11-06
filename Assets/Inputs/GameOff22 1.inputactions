@@ -1,5 +1,5 @@
 {
-    "name": "GameOff22",
+    "name": "GameOff22 1",
     "maps": [
         {
             "name": "Player",
@@ -19,7 +19,7 @@
                     "type": "Value",
                     "id": "57c02d3e-7c3c-4780-b091-e1db984bea86",
                     "expectedControlType": "Vector2",
-                    "processors": "",
+                    "processors": "InvertVector2",
                     "interactions": "",
                     "initialStateCheck": true
                 },

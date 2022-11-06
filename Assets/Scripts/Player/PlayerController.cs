@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
 
     [Space][Header("Transforms, layers and prefabs")]
+    [SerializeField] Transform cameraTransform;
     [Tooltip("Transform from which to check if the player is grounded")]
     public Transform feet;
     [Tooltip("Transform from which to check if the player is grounded while diving")]
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask homingTargets;
 
 
+
     [HideInInspector] public Rigidbody rigidBody;
     [HideInInspector] public CapsuleCollider capColl;
     [HideInInspector] public BoxCollider boxColl;
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool hitStunned = false;
     [HideInInspector] public bool isGrounded = true;
     [HideInInspector] public bool isInvincible = false;
+    [HideInInspector] public bool canAttack = true;
 
     public float? lastGroundedTime;
     public float? jumpPressedTime;
@@ -77,6 +80,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         isInvincible = false;
+        canAttack = true;
         currentState = baseState;
     }
 
@@ -94,8 +98,10 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue value)
     {
-        horizontalInput = value.Get<Vector2>().x;
-        verticalInput = value.Get<Vector2>().y;
+        Vector3 inputs = new Vector3(value.Get<Vector2>().x, 0, value.Get<Vector2>().y);
+        inputs = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up) * inputs;
+        horizontalInput = inputs.x;
+        verticalInput = inputs.z;
     }
 
     void OnJump()
@@ -106,14 +112,14 @@ public class PlayerController : MonoBehaviour
 
     void OnDive(InputValue value)
     {
-        if ((currentState != diveState && rigidBody.velocity.magnitude > 5)) ChangeState(diveState);
+        if ((currentState == baseState && rigidBody.velocity.magnitude > 5 && isGrounded)) ChangeState(diveState);
         else if (value.Get<float>() == 1 && rigidBody.velocity.magnitude <= 5) ChangeState(chargeState);
         else if (value.Get<float>() == 0 && currentState == chargeState) ChangeState(diveState);
     }
 
     void OnAttack()
     {
-        if (isGrounded) return;
+        if (isGrounded || currentState != baseState || !canAttack) return;
         ChangeState(attackState);
     }
 
