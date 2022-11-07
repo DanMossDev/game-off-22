@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2158.3115, g: 2260.4707, b: 3278.2188, a: 1}
+  m_IndirectSpecularColor: {r: 2159.3408, g: 2263.7832, b: 3287.4023, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -994,7 +994,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168281251}
-  m_LocalRotation: {x: 0.12153988, y: -6.5844636e-18, z: 3.0732076e-18, w: 0.99258655}
+  m_LocalRotation: {x: 0.121539876, y: 0.000000007395347, z: -9.0554275e-10, w: 0.99258655}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2230,7 +2230,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756902435}
-  m_LocalRotation: {x: 0.1445309, y: -0.000000017025721, z: 0.0000000024868538, w: 0.9895003}
+  m_LocalRotation: {x: 0.1445309, y: 0.000000017025718, z: -0.0000000024868534, w: 0.9895003}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3377,6 +3377,7 @@ GameObject:
   - component: {fileID: 1216290114}
   - component: {fileID: 1216290113}
   - component: {fileID: 1216290118}
+  - component: {fileID: 1216290120}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -3546,6 +3547,7 @@ MonoBehaviour:
   capColl: {fileID: 0}
   boxColl: {fileID: 0}
   hitPoints: {fileID: 0}
+  animator: {fileID: 0}
   horizontalInput: 0
   verticalInput: 0
   diveCharge: 0
@@ -3595,6 +3597,26 @@ MonoBehaviour:
   MaxHP: 3
   currentHP: 0
   deathSound: []
+--- !u!95 &1216290120
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216290112}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1df4fd5a6765eb440a97aef35707c3ff, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1257009025
 GameObject:
   m_ObjectHideFlags: 0
@@ -5313,7 +5335,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823688464}
-  m_LocalRotation: {x: 0.14453092, y: -0.000000034051443, z: 0.0000000049737086, w: 0.98950034}
+  m_LocalRotation: {x: 0.14453092, y: 0.00000003405144, z: -0.0000000049737077, w: 0.98950034}
   m_LocalPosition: {x: 0, y: 8.5, z: -290.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

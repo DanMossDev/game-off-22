@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public CapsuleCollider capColl;
     [HideInInspector] public BoxCollider boxColl;
     [HideInInspector] public HPManager hitPoints;
+    [HideInInspector] public Animator animator;
     [HideInInspector] public float horizontalInput;
     [HideInInspector] public float verticalInput;
     [HideInInspector] public float diveCharge = 0;
@@ -76,6 +77,7 @@ public class PlayerController : MonoBehaviour
         capColl = GetComponent<CapsuleCollider>();
         boxColl = GetComponent<BoxCollider>();
         hitPoints = GetComponent<HPManager>();
+        animator = GetComponent<Animator>();
     }
     void Start()
     {
@@ -132,6 +134,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(Collision other)
     {
+
         hitPoints.TakeDamage();
         if (currentState != baseState) ChangeState(baseState);
         rigidBody.AddForce((other.contacts[0].normal + Vector3.up) * hitBounce, ForceMode.Impulse);

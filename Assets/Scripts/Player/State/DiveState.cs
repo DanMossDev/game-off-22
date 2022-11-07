@@ -9,6 +9,8 @@ public class DiveState : PlayerState
         context.isInvincible = true;
         context.boxColl.enabled = true;
         context.capColl.enabled = false;
+        context.animator.ResetTrigger("Dive");
+        context.animator.SetTrigger("Dive");
 
         Vector3 diveBurst;
         if (context.horizontalInput == 0 && context.verticalInput == 0) diveBurst = context.transform.forward;

@@ -8,6 +8,8 @@ public class AttackState : PlayerState
     float initTime;
     public override void EnterState(PlayerController context) 
     {
+        context.animator.ResetTrigger("Attack");
+        context.animator.SetTrigger("Attack");
         context.canAttack = false;
         Vector3 aimDirection;
         if (context.horizontalInput == 0 && context.verticalInput == 0) aimDirection = context.transform.forward;
