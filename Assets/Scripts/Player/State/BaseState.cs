@@ -14,7 +14,7 @@ public class BaseState : PlayerState
     public override void UpdateState(PlayerController context) 
     {
         context.animator.SetFloat("ySpeed", context.rigidBody.velocity.y);
-        context.animator.SetFloat("moveSpeed", new Vector3(context.rigidBody.velocity.x, 0, context.rigidBody.velocity.z).magnitude);
+        context.animator.SetFloat("moveSpeed", new Vector3(context.rigidBody.velocity.x, 0, context.rigidBody.velocity.z).magnitude / 10);
         if (Physics.OverlapSphere(context.feet.position, 0.2f, context.ground).Length != 0) 
         {
             context.isGrounded = true;

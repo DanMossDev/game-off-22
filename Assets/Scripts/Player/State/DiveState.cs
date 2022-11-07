@@ -10,8 +10,7 @@ public class DiveState : PlayerState
         context.boxColl.enabled = true;
         context.capColl.enabled = false;
         SFXController.Instance.PlaySFX(context.diveSound);
-        context.animator.ResetTrigger("Dive");
-        context.animator.SetTrigger("Dive");
+        context.animator.SetBool("isDiving", true);
 
         Vector3 diveBurst;
         if (context.horizontalInput == 0 && context.verticalInput == 0) diveBurst = context.transform.forward;
@@ -37,6 +36,7 @@ public class DiveState : PlayerState
     }
     public override void LeaveState(PlayerController context)
     {
+        context.animator.SetBool("isDiving", false);
         context.EndInvincibility();
     }
 
