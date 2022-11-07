@@ -39,13 +39,24 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Layers which the homing attack will target")]
     public LayerMask homingTargets;
 
+    [Space][Header("Audio")]
+    public AudioClip[] jumpSound;
+    public AudioClip[] chargeSound;
+    public AudioClip[] diveSound;
+    public AudioClip[] attackSound;
+    public AudioClip[] landSound;
+    public AudioClip[] damageSound;
 
 
+
+    //Cached references
     [HideInInspector] public Rigidbody rigidBody;
     [HideInInspector] public CapsuleCollider capColl;
     [HideInInspector] public BoxCollider boxColl;
     [HideInInspector] public HPManager hitPoints;
     [HideInInspector] public Animator animator;
+
+    //Variables
     [HideInInspector] public float horizontalInput;
     [HideInInspector] public float verticalInput;
     [HideInInspector] public float diveCharge = 0;
@@ -53,9 +64,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool isGrounded = true;
     [HideInInspector] public bool isInvincible = false;
     [HideInInspector] public bool canAttack = true;
-
-    public float? lastGroundedTime;
-    public float? jumpPressedTime;
+    [HideInInspector] public float? lastGroundedTime;
+    [HideInInspector] public float? jumpPressedTime;
+    float? timeOfHitstun;
 
 
     //States
@@ -65,7 +76,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public DiveState diveState = new DiveState();
     [HideInInspector] public AttackState attackState = new AttackState();
 
-    float? timeOfHitstun;
 
 
     public static PlayerController Instance {get; private set;}
@@ -90,6 +100,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Menu.isPaused) return;
         currentState.UpdateState(this);
     }
 
@@ -102,6 +113,7 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue value)
     {
+        if (Menu.isPaused) return;
         Vector3 inputs = new Vector3(value.Get<Vector2>().x, 0, value.Get<Vector2>().y);
         inputs = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up) * inputs;
         horizontalInput = inputs.x;
@@ -110,18 +122,21 @@ public class PlayerController : MonoBehaviour
 
     void OnJump()
     {
+        if (Menu.isPaused) return;
         jumpPressedTime = Time.time;
         if (currentState == diveState && isGrounded) ChangeState(baseState);
     }
 
     void OnDive(InputValue value)
     {
+        if (Menu.isPaused) return;
         if (hitStunned) return;
         currentState.OnDive(this, value.Get<float>() == 1);
     }
 
     void OnAttack()
     {
+        if (Menu.isPaused) return;
         if (hitStunned) return;
         currentState.OnAttack(this);
     }
@@ -139,6 +154,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(Collision other)
     {
         hitPoints.TakeDamage();
+        SFXController.Instance.PlaySFX(damageSound);
         if (currentState != baseState) ChangeState(baseState);
         PowerUps.Instance.StopToast();
         ApplyHitstun(other.contacts[0].normal);

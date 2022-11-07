@@ -48,8 +48,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHP: 1
+  isPlayer: 0
+  isBoss: 0
   currentHP: 0
-  deathSound: []
+  deathSound:
+  - {fileID: 8300000, guid: 8ebe4fd31782d5145b198cb6c0b9ccb7, type: 3}
+  - {fileID: 8300000, guid: 886e0173ee6119148b2fa3d861a01f17, type: 3}
+  - {fileID: 8300000, guid: a807df59d8581d545a0b9bce3091b992, type: 3}
+  - {fileID: 8300000, guid: 9b5e19166568d6b48b66865a36d2f5cf, type: 3}
 --- !u!114 &8937176036983780900
 MonoBehaviour:
   m_ObjectHideFlags: 0

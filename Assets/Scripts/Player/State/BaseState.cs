@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class BaseState : PlayerState
 {
+    float lastFootstepTime;
     public override void EnterState(PlayerController context) 
     {
         context.capColl.enabled = true;
         context.boxColl.enabled = false;
+        lastFootstepTime = Time.time;
     }
     public override void UpdateState(PlayerController context) 
     {
@@ -18,6 +20,7 @@ public class BaseState : PlayerState
             context.isGrounded = true;
             context.lastGroundedTime = Time.time;
             context.canAttack = true;
+            if (!context.animator.GetBool("isGrounded")) SFXController.Instance.PlaySFX(context.landSound);
             context.animator.SetBool("isGrounded", true);
         } else {
             context.isGrounded = false;
@@ -73,6 +76,7 @@ public class BaseState : PlayerState
         context.lastGroundedTime = null;
         context.animator.ResetTrigger("Jump");
         context.animator.SetTrigger("Jump");
+        SFXController.Instance.PlaySFX(context.jumpSound);
         float impulse = Mathf.Sqrt(context.jumpHeight * -2 * Physics.gravity.y);
         context.rigidBody.AddForce(new Vector3(0, impulse, 0), ForceMode.VelocityChange);
     }

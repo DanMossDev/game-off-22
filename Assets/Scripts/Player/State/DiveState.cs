@@ -9,6 +9,7 @@ public class DiveState : PlayerState
         context.isInvincible = true;
         context.boxColl.enabled = true;
         context.capColl.enabled = false;
+        SFXController.Instance.PlaySFX(context.diveSound);
         context.animator.ResetTrigger("Dive");
         context.animator.SetTrigger("Dive");
 

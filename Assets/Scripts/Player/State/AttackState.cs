@@ -6,11 +6,14 @@ public class AttackState : PlayerState
 {
     GameObject target;
     float initTime;
+    bool playedSound;
     public override void EnterState(PlayerController context) 
     {
+        SFXController.Instance.PlaySFX(context.attackSound);
         context.animator.ResetTrigger("Attack");
         context.animator.SetTrigger("Attack");
         context.canAttack = false;
+        playedSound = false;
         Vector3 aimDirection;
         if (context.horizontalInput == 0 && context.verticalInput == 0) aimDirection = context.transform.forward;
         else aimDirection = new Vector3(context.horizontalInput, 0, context.verticalInput);
@@ -60,6 +63,10 @@ public class AttackState : PlayerState
             context.ChangeState(context.diveState);
             context.ChangeState(context.baseState);
             return;
+        }
+        if (!playedSound) {
+            SFXController.Instance.PlaySFX(context.diveSound);
+            playedSound = true;
         }
 
         context.rigidBody.velocity = (target.transform.position - context.transform.position) * 10;
