@@ -25,6 +25,10 @@ public class AttackState : PlayerState
         {  
             target = ray.transform.gameObject;
         }
+        else if (Physics.SphereCast(context.transform.position - (aimDirection * 9), 10, aimDirection, out ray, 15, context.homingTargets))
+        {  
+            target = ray.transform.gameObject;
+        }
         else target = null;
         
         InitAttack(context);
@@ -72,6 +76,14 @@ public class AttackState : PlayerState
         {
             other.gameObject.GetComponent<HPManager>().TakeDamage();
             context.rigidBody.AddForce((other.contacts[0].normal + Vector3.up * 3).normalized * context.hitBounce / 1.5f, ForceMode.VelocityChange);
+            context.canAttack = true;
+            context.ChangeState(context.baseState);
+        }
+
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Target"))
+        {
+            other.gameObject.GetComponent<BossTarget>().OnHit();
+            context.rigidBody.AddForce((other.contacts[0].normal + Vector3.up * 2).normalized * context.hitBounce, ForceMode.VelocityChange);
             context.canAttack = true;
             context.ChangeState(context.baseState);
         }

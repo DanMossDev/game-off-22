@@ -5,6 +5,8 @@ using UnityEngine;
 public class HPManager : MonoBehaviour
 {
     [SerializeField] int MaxHP = 3;
+    [SerializeField] bool isPlayer = false;
+    [SerializeField] bool isBoss = false;
     [HideInInspector] public int currentHP;
 
     [Space][Header("Audio")]
@@ -29,8 +31,11 @@ public class HPManager : MonoBehaviour
     public void Die()
     {
         //SFXController.Instance.PlaySFX(deathSound);
-        if (gameObject.name == "Player") LevelManager.Instance.GameOver(GameOvers.Death);
-
+        if (isPlayer) LevelManager.Instance.GameOver(GameOvers.Death);
+        else if (isBoss) {
+            //GetComponentInParent<BossController>().Die();
+            LevelManager.Instance.LevelComplete();
+        }
         else {
             Destroy(gameObject);
             LevelManager.Instance.Score += 200;

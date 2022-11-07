@@ -52,25 +52,25 @@ public class LevelManager : MonoBehaviour
         switch (Score)
         {
             case int n when n >= Sscore:
-                //S grade;
+                print("S grade");
                 break;
             case int n when n >= Ascore:
-                //A grade;
+                print("A grade");
                 break;
             case int n when n >= Bscore:
-                //B grade;
+                print("B grade");
                 break;
             case int n when n >= Cscore:
-                //C grade;
+                print("C grade");
                 break;
             case int n when n >= Dscore:
-                //D grade;
+                print("D grade");
                 break;
             case int n when n >= Escore:
-                //E grade;
+                print("E grade");
                 break;
             default:
-                //F grade
+                print("F grade");
                 break;
         }
     }
