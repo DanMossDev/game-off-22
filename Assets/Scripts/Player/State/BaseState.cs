@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class BaseState : PlayerState
 {
+    float lastFootstepTime;
     public override void EnterState(PlayerController context) 
     {
         context.capColl.enabled = true;
         context.boxColl.enabled = false;
+        lastFootstepTime = Time.time;
     }
     public override void UpdateState(PlayerController context) 
     {
         context.animator.SetFloat("ySpeed", context.rigidBody.velocity.y);
-        context.animator.SetFloat("moveSpeed", new Vector3(context.rigidBody.velocity.x, 0, context.rigidBody.velocity.z).magnitude);
+        context.animator.SetFloat("moveSpeed", new Vector3(context.rigidBody.velocity.x, 0, context.rigidBody.velocity.z).magnitude / 10);
         if (Physics.OverlapSphere(context.feet.position, 0.2f, context.ground).Length != 0) 
         {
             context.isGrounded = true;
             context.lastGroundedTime = Time.time;
             context.canAttack = true;
+            if (!context.animator.GetBool("isGrounded")) SFXController.Instance.PlaySFX(context.landSound);
             context.animator.SetBool("isGrounded", true);
         } else {
             context.isGrounded = false;
@@ -73,6 +76,7 @@ public class BaseState : PlayerState
         context.lastGroundedTime = null;
         context.animator.ResetTrigger("Jump");
         context.animator.SetTrigger("Jump");
+        SFXController.Instance.PlaySFX(context.jumpSound);
         float impulse = Mathf.Sqrt(context.jumpHeight * -2 * Physics.gravity.y);
         context.rigidBody.AddForce(new Vector3(0, impulse, 0), ForceMode.VelocityChange);
     }

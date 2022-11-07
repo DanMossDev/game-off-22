@@ -16,10 +16,10 @@ public class MusicController : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
     }
-    public void Play(AudioClip song, float volume = 1)
+    public void Play(AudioClip[] song, float volume = 1)
     {
         audioSource.loop = true;
-        audioSource.clip = song;
+        audioSource.clip = song[Random.Range(0, song.Length)];
         audioSource.Play();
     }
     public void Stop()

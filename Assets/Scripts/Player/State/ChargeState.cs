@@ -7,6 +7,7 @@ public class ChargeState : PlayerState
     public override void EnterState(PlayerController context) 
     {
         context.animator.SetBool("isCharging", true);
+        SFXController.Instance.PlaySFX(context.chargeSound);
         context.isInvincible = true;
         context.boxColl.enabled = true;
         context.capColl.enabled = false;
@@ -21,6 +22,7 @@ public class ChargeState : PlayerState
     public override void LeaveState(PlayerController context) 
     {
         context.animator.SetBool("isCharging", false);
+        SFXController.Instance.StopSFX();
     }
 
     public override void OnDive(PlayerController context, bool isPressed)
