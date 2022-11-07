@@ -65,6 +65,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public DiveState diveState = new DiveState();
     [HideInInspector] public AttackState attackState = new AttackState();
 
+    float? timeOfHitstun;
+
 
     public static PlayerController Instance {get; private set;}
 
@@ -114,11 +116,13 @@ public class PlayerController : MonoBehaviour
 
     void OnDive(InputValue value)
     {
+        if (hitStunned) return;
         currentState.OnDive(this, value.Get<float>() == 1);
     }
 
     void OnAttack()
     {
+        if (hitStunned) return;
         currentState.OnAttack(this);
     }
 
@@ -134,12 +138,17 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(Collision other)
     {
-
         hitPoints.TakeDamage();
         if (currentState != baseState) ChangeState(baseState);
-        rigidBody.AddForce((other.contacts[0].normal + Vector3.up) * hitBounce, ForceMode.Impulse);
-        hitStunned = true;
         PowerUps.Instance.StopToast();
+        ApplyHitstun(other.contacts[0].normal);
+    }
+
+    public void ApplyHitstun(Vector3 force)
+    {
+        timeOfHitstun = Time.time;
+        rigidBody.AddForce((force + Vector3.up) * hitBounce, ForceMode.Impulse);
+        hitStunned = true;
 
         if (hitPoints.currentHP > 0) StartCoroutine(EndHitstun());
     }
@@ -149,7 +158,8 @@ public class PlayerController : MonoBehaviour
         while (hitStunned)
         {
             yield return new WaitForSeconds(0.1f);
-            if (isGrounded) {
+            if (isGrounded || Time.time - timeOfHitstun > 1) {
+                timeOfHitstun = null;
                 hitStunned = false;
             }
         }

@@ -33,8 +33,7 @@ public class HPManager : MonoBehaviour
         //SFXController.Instance.PlaySFX(deathSound);
         if (isPlayer) LevelManager.Instance.GameOver(GameOvers.Death);
         else if (isBoss) {
-            //GetComponentInParent<BossController>().Die();
-            LevelManager.Instance.LevelComplete();
+            GetComponentInParent<BossController>().Die();
         }
         else {
             Destroy(gameObject);

@@ -19,6 +19,8 @@ public class LevelManager : MonoBehaviour
     public int Ascore = 6000;
     public int Sscore = 7000;
 
+    Coroutine Timer;
+
 
     public static LevelManager Instance {get; private set;}
 
@@ -32,7 +34,7 @@ public class LevelManager : MonoBehaviour
     {
         Score = 0;
         timeLeft = timeLimit;
-        StartCoroutine(CountDown());
+        Timer = StartCoroutine(CountDown());
     }
 
 
@@ -73,6 +75,11 @@ public class LevelManager : MonoBehaviour
                 print("F grade");
                 break;
         }
+    }
+
+    public void StopTimer()
+    {
+        StopCoroutine(Timer);
     }
 
     IEnumerator CountDown()
