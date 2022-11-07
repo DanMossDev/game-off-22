@@ -49,7 +49,7 @@ public class AttackState : PlayerState
     public override void UpdateState(PlayerController context) 
     {
         Rotate(context);
-        if (Time.time - initTime < 0.5f) return;
+        if (Time.time - initTime < 0.25f) return;
         if (Time.time - initTime >= 3) {
             context.ChangeState(context.baseState);
             return;

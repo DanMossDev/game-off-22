@@ -10,6 +10,7 @@ public class BossTrigger : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player")) 
         {
+            LevelManager.Instance.StopTimer();
             boss.SetActive(true);
             foreach(GameObject wall in bossWalls) wall.SetActive(true);
             this.enabled = false;

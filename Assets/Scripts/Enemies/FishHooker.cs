@@ -29,7 +29,7 @@ public class FishHooker : MonoBehaviour
             if (Time.time - timeOfTarget >= reelUpTime)
             {
                 hook.SetActive(true);
-                hook.GetComponent<HookShot>().p3 = target.transform.position + (target.GetComponent<Rigidbody>().velocity * 1) + Vector3.up;
+                hook.GetComponent<HookShot>().p3 = target.transform.position + (Vector3.ClampMagnitude(target.GetComponent<Rigidbody>().velocity, 30)) + Vector3.up;
             }
             return;
         }

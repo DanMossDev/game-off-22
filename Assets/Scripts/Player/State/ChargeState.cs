@@ -13,10 +13,10 @@ public class ChargeState : PlayerState
     }
     public override void UpdateState(PlayerController context) 
     {
-        context.rigidBody.velocity = Vector3.zero;
+        Rotate(context);
+        context.rigidBody.velocity *= 0.5f;
         if (context.diveCharge < context.maxDiveCharge) context.diveCharge += Time.deltaTime * context.chargeRate;
 
-        Rotate(context);
     }
     public override void LeaveState(PlayerController context) 
     {

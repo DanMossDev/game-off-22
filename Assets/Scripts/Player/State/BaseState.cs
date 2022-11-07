@@ -37,8 +37,8 @@ public class BaseState : PlayerState
 
     public override void OnDive(PlayerController context, bool isPressed)
     {
-        if (context.rigidBody.velocity.magnitude > 5 || !context.isGrounded) context.ChangeState(context.diveState);
-        else if (context.isGrounded && context.rigidBody.velocity.magnitude <= 5) context.ChangeState(context.chargeState);
+        if (context.rigidBody.velocity.magnitude > 30 || !context.isGrounded) context.ChangeState(context.diveState);
+        else if (context.isGrounded && context.rigidBody.velocity.magnitude <= 30) context.ChangeState(context.chargeState);
     }
 
     public override void OnAttack(PlayerController context)
