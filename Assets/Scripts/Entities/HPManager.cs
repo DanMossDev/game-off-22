@@ -19,8 +19,12 @@ public class HPManager : MonoBehaviour
     public void TakeDamage()
     {
         currentHP--;
-
-        if (currentHP <= 0) Die();
+        if (currentHP <= 0) 
+        {
+            Die();
+            return;
+        }
+        if (isBoss) GetComponentInParent<BossController>().damagedThisCycle = true;
     }
 
     public void Heal()

@@ -58,6 +58,7 @@ public class DiveState : PlayerState
             context.rigidBody.AddForce((other.contacts[0].normal + Vector3.up) * context.hitBounce, ForceMode.VelocityChange);
             context.ChangeState(context.baseState);
         }
+        if (other.gameObject.layer == LayerMask.NameToLayer("Boss")) context.TakeDamage(other);
     }
 
     void Movement(PlayerController context)

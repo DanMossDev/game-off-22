@@ -20,7 +20,18 @@ public class BossTarget : MonoBehaviour
     IEnumerator Restore()
     {
         yield return new WaitForSeconds(5);
-        gameObject.layer = LayerMask.NameToLayer("Target");
+        if (BossController.Instance.currentState == BossController.Instance.spinState) gameObject.layer = LayerMask.NameToLayer("Boss");
+        else gameObject.layer = LayerMask.NameToLayer("Target");
         meshRenderer.enabled = true;
+    }
+
+    public void BecomeUntargettable()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Boss");
+    }
+
+    public void BecomeTargettable()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Target");
     }
 }

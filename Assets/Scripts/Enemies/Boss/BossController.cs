@@ -5,68 +5,108 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
-    enum States {
-        Idle,
-        Spin,
-        Shoot
+    [Space][Header("Boss Variables")]
+    public float rotationSpeed = 60;
+    [Tooltip("Speed at which the boss moves towards the player in spin state")]
+    public float rushSpeed = 10;
+    [Tooltip("Amount of time the boss spends charging before unleashing the projectile attack")]
+    public float chargeTime = 5;
+
+    [Space][Header("Transforms and Prefabs")]
+    public GameObject player;
+    public GameObject SphereHolder;
+    public GameObject[] Spheres;
+    public GameObject head;
+
+    [HideInInspector] public bool damagedThisCycle = false;
+    [HideInInspector] public List<Vector3> sphereStartingPos = new List<Vector3>();
+    float lerp;
+
+
+    [HideInInspector] public BossState currentState;
+    [HideInInspector] public BossBase baseState = new BossBase();
+    [HideInInspector] public BossSpin spinState = new BossSpin();
+    [HideInInspector] public BossCharge chargeState = new BossCharge();
+    [HideInInspector] public BossRelease releaseState = new BossRelease();
+    [HideInInspector] public BossExhaust exhaustState = new BossExhaust();
+
+    public static BossController Instance {get; private set;}
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
     }
-
-    States state;
-
-    [SerializeField] GameObject[] Targets;
-    
-    float timeTilNextState = 5;
-    float lastChange;
-
 
     void Start()
     {
-        state = States.Idle;
-        lastChange = Time.time;
-    }
-
-    void Update()
-    {
-        switch (state)
+        foreach (GameObject sphere in Spheres)
         {
-            case States.Idle:
-                Idle();
-                break;
-            case States.Spin:
-                Spin();
-                break;
-            case States.Shoot:
-                Shoot();
-                break;
+            sphereStartingPos.Add(sphere.transform.localPosition);
         }
-
-        if (Time.time - lastChange >= timeTilNextState) ChangeState();
     }
 
-    void ChangeState()
+    void OnEnable()
     {
-        if (state == States.Idle) state = (States)Random.Range(1, 3);
-        else state = States.Idle;
-
-        timeTilNextState = Random.Range(5, 16);
-        lastChange = Time.time;
+        currentState = baseState;
+        currentState.EnterState(this);
     }
 
-    void Idle()
+    void FixedUpdate()
     {
-        print("In idle state");
+        currentState.UpdateState(this);
     }
 
-    void Spin()
+    public void ChangeState()
     {
-        //animator.SetTrigger("Spin");
-        print("In spin state");
+        currentState.LeaveState(this);
+        if (currentState != baseState) currentState = baseState;
+        else 
+        {
+            int random = Random.Range(0, 2);
+            if (random == 0) currentState = spinState;
+            else currentState = chargeState;
+        }
+        currentState.EnterState(this);
     }
 
-    void Shoot()
+    public void BeginAttack()
     {
-        //animator.SetTrigger("Shoot");
-        print("In shoot state");
+        currentState.LeaveState(this);
+        currentState = releaseState;
+        currentState.EnterState(this);
+    }
+
+    public void BecomeExhausted()
+    {
+        currentState.LeaveState(this);
+        currentState = exhaustState;
+        currentState.EnterState(this);
+    }
+
+    public void restoreSpheres()
+    {
+        lerp = 0;
+        StartCoroutine(EaseSpheres());
+    }
+
+    IEnumerator EaseSpheres()
+    {
+        while (lerp <= 1)
+        {
+            lerp += Time.deltaTime / 2;
+            for (int i = 0; i < Spheres.Length; i++)
+            {
+                Spheres[i].transform.localPosition = Vector3.Lerp(Spheres[i].transform.localPosition, sphereStartingPos[i], lerp);
+            }
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    public void LookAtPlayer()
+    {
+        Vector3 toPlayer = new Vector3(player.transform.position.x - transform.position.x, 0, player.transform.position.z - transform.position.z);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toPlayer, Vector3.up), rotationSpeed * Time.deltaTime);
     }
 
     public void Die()

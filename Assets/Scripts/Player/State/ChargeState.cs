@@ -35,7 +35,7 @@ public class ChargeState : PlayerState
 
     public override void OnCollision(PlayerController context, Collision other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") || other.gameObject.layer == LayerMask.NameToLayer("Boss"))
         {
             other.gameObject.GetComponent<HPManager>().TakeDamage();
         }

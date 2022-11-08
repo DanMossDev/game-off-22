@@ -54,7 +54,10 @@ public class BaseState : PlayerState
 
     public override void OnCollision(PlayerController context, Collision other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && !context.isInvincible) context.TakeDamage(other);
+        if ((other.gameObject.layer == LayerMask.NameToLayer("Enemy") || other.gameObject.layer == LayerMask.NameToLayer("Boss")) && !context.isInvincible)
+        {
+            context.TakeDamage(other);
+        }
     }
 
     void Movement(PlayerController context)

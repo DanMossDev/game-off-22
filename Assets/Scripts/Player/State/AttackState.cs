@@ -94,6 +94,8 @@ public class AttackState : PlayerState
             context.canAttack = true;
             context.ChangeState(context.baseState);
         }
+
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Boss")) context.TakeDamage(other);
     }
 
     void Rotate(PlayerController context)

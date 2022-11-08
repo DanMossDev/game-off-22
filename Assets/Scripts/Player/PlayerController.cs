@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(Collision other)
     {
+        if (hitStunned) return;
         hitPoints.TakeDamage();
         SFXController.Instance.PlaySFX(damageSound);
         if (currentState != baseState) ChangeState(baseState);
