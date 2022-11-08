@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour
         hitPoints.TakeDamage();
         SFXController.Instance.PlaySFX(damageSound);
         if (currentState != baseState) ChangeState(baseState);
-        PowerUps.Instance.StopToast();
+        PowerUps.Instance.StopEnergyDrink();
         ApplyHitstun(other.contacts[0].normal);
     }
 

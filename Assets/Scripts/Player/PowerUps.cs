@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class PowerUps : MonoBehaviour
 {
-    [Space][Header("Toast Variables")]
-    [SerializeField] float toastTime = 3;
-    [SerializeField] float toastForce = 15;
-    bool hasToast = false;
+    [Space][Header("Energy Drink Variables")]
+    [SerializeField] float drinkTime = 3;
+    [SerializeField] float drinkForce = 15;
+    [Space][Header("Energy Drink References")]
+    [SerializeField] GameObject EnergyDrink;
+    [SerializeField] GameObject Toast;
+    [SerializeField] SkinnedMeshRenderer body;
+
+    Mesh bodyMesh;
+
+    bool hasDrink = false;
 
     float powerUpStartTime;
 
@@ -24,6 +31,7 @@ public class PowerUps : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        bodyMesh = body.sharedMesh;
     }
 
     public void PowerUp(Pickups powerUp)
@@ -33,32 +41,41 @@ public class PowerUps : MonoBehaviour
             case Pickups.Toast:
 
                 powerUpStartTime = Time.time;
-                if (hasToast) break;
-                else StartCoroutine(EatToast());
+                if (hasDrink) break;
+                else StartCoroutine(DrinkEnergy());
                 break;
             default:
                 break;
         }
     }
 
-    public void StopToast()
+    public void StopEnergyDrink()
     {
+        EnergyDrink.SetActive(false);
+        Toast.SetActive(true);
+        body.SetBlendShapeWeight(0, 0);
         StopAllCoroutines();
     }
 
-    IEnumerator EatToast()
+    IEnumerator DrinkEnergy()
     {
-        hasToast = true;
-        while (Time.time < powerUpStartTime + toastTime)
+        EnergyDrink.SetActive(true);
+        Toast.SetActive(false);
+        body.SetBlendShapeWeight(bodyMesh.GetBlendShapeIndex("MouthOpen"), 100);
+        hasDrink = true;
+        while (Time.time < powerUpStartTime + drinkTime)
         {
             yield return new WaitForEndOfFrame();
-            rigidBody.AddForce(transform.forward * toastForce, ForceMode.Force);
+            rigidBody.AddForce(transform.forward * drinkForce, ForceMode.Force);
         }
-        while (Time.time < powerUpStartTime + toastTime + 1f)
+        while (Time.time < powerUpStartTime + drinkTime + 1f)
         {
             yield return new WaitForEndOfFrame();
-            rigidBody.velocity = new Vector3(rigidBody.velocity.x * 0.975f, rigidBody.velocity.y, rigidBody.velocity.z * 0.99f);
+            rigidBody.velocity = new Vector3(rigidBody.velocity.x * 0.99f, rigidBody.velocity.y, rigidBody.velocity.z * 0.99f);
         }
-        hasToast = false;
+        hasDrink = false;
+        EnergyDrink.SetActive(false);
+        Toast.SetActive(true);
+        body.SetBlendShapeWeight(0, 0);
     }
 }

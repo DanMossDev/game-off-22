@@ -27,8 +27,14 @@ public class DiveState : PlayerState
     {
         if (Physics.OverlapSphere(context.belly.position, 0.2f, context.ground).Length != 0) 
         {
+            context.animator.SetBool("isGrounded", true);
             context.isGrounded = true;
             context.lastGroundedTime = Time.time;
+        }
+        else
+        {
+            context.animator.SetBool("isGrounded", true);
+            context.isGrounded = false;
         }
         if (context.horizontalInput == 0 && context.verticalInput == 0) return;
         Movement(context);

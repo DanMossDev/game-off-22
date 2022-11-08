@@ -33,10 +33,13 @@ public class BaseState : PlayerState
             return;
         }
         Movement(context);
+        context.animator.SetBool("isSkidding", Utils.CompareVector3(new Vector3(context.horizontalInput, 0, context.verticalInput).normalized, context.rigidBody.velocity.normalized * -1, 0.25f));
         Rotate(context);
     }
     public override void LeaveState(PlayerController context) 
-    {}
+    {
+        context.animator.SetBool("isSkidding", false);
+    }
 
     public override void OnDive(PlayerController context, bool isPressed)
     {
@@ -60,7 +63,6 @@ public class BaseState : PlayerState
         if (context.verticalInput == 0 || Mathf.Sign(context.rigidBody.velocity.z) != Mathf.Sign(context.verticalInput)) context.rigidBody.velocity = new Vector3(context.rigidBody.velocity.x, context.rigidBody.velocity.y, context.rigidBody.velocity.z * context.stoppingDrag);
         
         Vector3 movement = new Vector3(context.horizontalInput * context.acceleration * (30 / (Mathf.Abs(context.rigidBody.velocity.x) + 10)), 0, context.verticalInput * context.acceleration * (30 / (Mathf.Abs(context.rigidBody.velocity.z) + 10)));
-        context.animator.SetBool("isSkidding", Utils.CompareVector3(movement, context.rigidBody.velocity * -1, 0.25f));
         context.rigidBody.AddForce(movement, ForceMode.Force);
     }
 

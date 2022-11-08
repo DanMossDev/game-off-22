@@ -19,7 +19,7 @@ public class BossTarget : MonoBehaviour
 
     IEnumerator Restore()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         gameObject.layer = LayerMask.NameToLayer("Target");
         meshRenderer.enabled = true;
     }
