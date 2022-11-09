@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class HookShot : MonoBehaviour
 {
-    [System.NonSerialized] public Vector3 p3;
-    Vector3 p0;
-    Vector3 p1;
-    Vector3 p2;
+    [System.NonSerialized] public Vector3 target;
+    Vector3 startPos;
 
-    float lerp = 0;
+    float timeShot;
 
     void OnEnable()
     {
-        transform.position = transform.parent.transform.position;
-        lerp = 0;
-        p0 = transform.position;
-        p1 = transform.position + (Vector3.up * 5);
-        p2 = p3 + (Vector3.up * 5);
+        transform.position = startPos = transform.parent.transform.position;
+        timeShot = Time.time;
     }
     void Update()
     {
-        lerp += Time.deltaTime;
-        transform.position = Utils.cubeBezier3(p0, p1, p2, p3, lerp);
-
-        if (lerp >= 1) BecomeInactive();
+        MoveTowardsTarget();
+        if (Time.time - timeShot >= 5f) BecomeInactive();
     }
+
+    void MoveTowardsTarget()
+    {
+        Vector3 direction = (target - startPos).normalized;
+        transform.position += direction * Time.deltaTime * 40;
+    }
+        
 
     void OnCollisionEnter(Collision other)
     {
@@ -35,7 +35,6 @@ public class HookShot : MonoBehaviour
 
     void BecomeInactive()
     {
-        GetComponentInParent<FishHooker>().target = null;
         gameObject.SetActive(false);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HPManager : MonoBehaviour
 {
-    [SerializeField] int MaxHP = 3;
+    [SerializeField] int MaxHP = 1;
     [SerializeField] bool isPlayer = false;
     [SerializeField] bool isBoss = false;
     [HideInInspector] public int currentHP;

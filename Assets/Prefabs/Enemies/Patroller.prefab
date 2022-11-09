@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca68634fade4ffa4b9d1d0e3a36a88ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 3
+  MaxHP: 1
   isPlayer: 0
   isBoss: 0
   currentHP: 0
@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7894fd3ac34469d4da91646f42276ec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agroRange: 15
+  agroRange: 25
   patrolSpeed: 3
   chaseSpeed: 5
   patrolPoints:
