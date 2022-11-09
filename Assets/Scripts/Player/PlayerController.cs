@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool hitStunned = false;
     [HideInInspector] public bool isGrounded = true;
     [HideInInspector] public bool isInvincible = false;
+    [HideInInspector] public bool isVictorious = false;
     [HideInInspector] public bool canAttack = true;
     [HideInInspector] public float? lastGroundedTime;
     [HideInInspector] public float? jumpPressedTime;
@@ -93,6 +94,7 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
+        isVictorious = false;
         isInvincible = false;
         canAttack = true;
         currentState = baseState;
@@ -113,6 +115,12 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue value)
     {
+        if (isVictorious)
+        {
+            horizontalInput = 0;
+            verticalInput = 0;
+            return;
+        }
         if (Menu.isPaused) return;
         Vector3 inputs = new Vector3(value.Get<Vector2>().x, 0, value.Get<Vector2>().y);
         inputs = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up) * inputs;
@@ -122,26 +130,27 @@ public class PlayerController : MonoBehaviour
 
     void OnJump()
     {
-        if (Menu.isPaused) return;
+        if (Menu.isPaused || isVictorious) return;
         jumpPressedTime = Time.time;
         if (currentState == diveState && isGrounded) ChangeState(baseState);
     }
 
     void OnDive(InputValue value)
     {
-        if (Menu.isPaused) return;
+        if (Menu.isPaused || isVictorious) return;
         if (hitStunned) return;
         currentState.OnDive(this, value.Get<float>() == 1);
     }
 
     void OnAttack()
     {
-        if (Menu.isPaused) return;
+        if (Menu.isPaused || isVictorious) return;
         if (hitStunned) return;
         currentState.OnAttack(this);
     }
 
     void OnCollisionEnter(Collision other) {
+        if (isVictorious) return;
         if ((ground & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) return;
         if ((hazard & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) {
             TakeDamage(other);
@@ -153,7 +162,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(Collision other)
     {
-        if (hitStunned) return;
+        if (hitStunned || isVictorious) return;
         hitPoints.TakeDamage();
         SFXController.Instance.PlaySFX(damageSound);
         if (currentState != baseState) ChangeState(baseState);

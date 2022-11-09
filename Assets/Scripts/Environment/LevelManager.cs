@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
     [Tooltip("Amount of seconds to complete the level before gameover occurs")][SerializeField]
     float timeLimit = 120;
-    public float timeLeft;
+    [Tooltip("The cinemachine camera which will become active to show the victory animation")][SerializeField]
+    CinemachineVirtualCamera victoryCam;
+    [Tooltip("The UI which is shown on victory")][SerializeField]
+    GameObject victoryScreen;
+    [HideInInspector] public float timeLeft;
     [HideInInspector] public int Score = 0;
 
 
@@ -20,6 +25,8 @@ public class LevelManager : MonoBehaviour
     public int Sscore = 7000;
 
     Coroutine Timer;
+
+    [SerializeField] bool forceVictory = false;
 
 
     public static LevelManager Instance {get; private set;}
@@ -37,9 +44,15 @@ public class LevelManager : MonoBehaviour
         Timer = StartCoroutine(CountDown());
     }
 
+    void Update()
+    {
+        if (forceVictory) LevelComplete(); 
+    }
+
 
     public void GameOver(GameOvers cause)
     {
+        Menu.isPaused = true;
         Invoke("ReloadLevel", 3);
     }
 
@@ -48,9 +61,16 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
     public void LevelComplete()
     {
-        Score += Mathf.RoundToInt(timeLeft) * 100;
+        PlayerController.Instance.isVictorious = true;
+        victoryCam.enabled = true;
+        StartCoroutine(DisplayVictoryScreen());
         switch (Score)
         {
             case int n when n >= Sscore:
@@ -91,6 +111,13 @@ public class LevelManager : MonoBehaviour
         }
 
         GameOver(GameOvers.TimeOut);
+    }
+
+    IEnumerator DisplayVictoryScreen()
+    {
+        while (!PlayerController.Instance.isGrounded) yield return new WaitForFixedUpdate();
+        yield return new WaitForSeconds(0.5f);
+        victoryScreen.SetActive(true);
     }
 
 }
