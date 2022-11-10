@@ -28,13 +28,17 @@ public class Mover : MonoBehaviour
         if (lerp >= 1 || lerp <= 0) movingTo = !movingTo;
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other) 
     {
-        other.gameObject.transform.parent = transform;
+        other.gameObject.transform.SetParent(transform);
     }
 
-    void OnCollisionExit(Collision other)
+    void OnTriggerExit(Collider other)
     {
-        other.gameObject.transform.parent = null;
+        other.gameObject.transform.SetParent(null);
+        Vector3 direction;
+        if (movingTo) direction = moveTo - moveFrom;
+        else direction = moveFrom - moveTo;
+        other.gameObject.GetComponent<Rigidbody>().AddForce(direction * moveSpeed / 2, ForceMode.Impulse);
     }
 }

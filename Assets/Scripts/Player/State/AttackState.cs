@@ -24,11 +24,11 @@ public class AttackState : PlayerState
         {
             target = ray.transform.gameObject;
         }
-        else if (Physics.SphereCast(context.transform.position - (aimDirection * 4), 5, aimDirection, out ray, 15, context.homingTargets))
+        else if (Physics.SphereCast(context.transform.position - (aimDirection * 4), 5, aimDirection, out ray, 17, context.homingTargets))
         {  
             target = ray.transform.gameObject;
         }
-        else if (Physics.SphereCast(context.transform.position - (aimDirection * 9), 10, aimDirection, out ray, 15, context.homingTargets))
+        else if (Physics.SphereCast(context.transform.position - (aimDirection * 9), 10, aimDirection, out ray, 20, context.homingTargets))
         {  
             target = ray.transform.gameObject;
         }
