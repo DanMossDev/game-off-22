@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b7ecb57feb0c45f468b8386c7e203bd1
+guid: 9bb64465706ea2e4282d93f4f0cb0818
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Education Childsmart
+  - Bellerose
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
