@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public float horizontalInput;
     [HideInInspector] public float verticalInput;
     [HideInInspector] public float diveCharge = 0;
+    [HideInInspector] public float boostTime = 0;
     [HideInInspector] public bool hitStunned = false;
     [HideInInspector] public bool isGrounded = true;
     [HideInInspector] public bool isInvincible = false;
@@ -76,6 +77,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public ChargeState chargeState = new ChargeState();
     [HideInInspector] public DiveState diveState = new DiveState();
     [HideInInspector] public AttackState attackState = new AttackState();
+    [HideInInspector] public BoostState boostState = new BoostState();
 
 
 
