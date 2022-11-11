@@ -69,6 +69,7 @@ public class LevelManager : MonoBehaviour
     public void LevelComplete()
     {
         PlayerController.Instance.isVictorious = true;
+        PlayerController.Instance.animator.SetTrigger("Victory");
         victoryCam.enabled = true;
         StartCoroutine(DisplayVictoryScreen());
         switch (Score)

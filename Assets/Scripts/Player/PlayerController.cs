@@ -166,6 +166,8 @@ public class PlayerController : MonoBehaviour
     {
         if (hitStunned || isVictorious) return;
         hitPoints.TakeDamage();
+        animator.ResetTrigger("Damaged");
+        animator.SetTrigger("Damaged");
         SFXController.Instance.PlaySFX(damageSound);
         if (currentState != baseState) ChangeState(baseState);
         PowerUps.Instance.StopEnergyDrink();

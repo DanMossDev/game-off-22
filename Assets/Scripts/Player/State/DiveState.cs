@@ -10,6 +10,7 @@ public class DiveState : PlayerState
         context.boxColl.enabled = true;
         context.capColl.enabled = false;
         SFXController.Instance.PlaySFX(context.diveSound);
+        context.animator.SetTrigger("Dive");
         context.animator.SetBool("isDiving", true);
 
         Vector3 diveBurst;

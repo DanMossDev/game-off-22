@@ -6,11 +6,11 @@ public class ChargeState : PlayerState
 {
     public override void EnterState(PlayerController context) 
     {
-        context.animator.SetBool("isCharging", true);
-        SFXController.Instance.PlaySFX(context.chargeSound);
-        context.isInvincible = true;
         context.boxColl.enabled = true;
         context.capColl.enabled = false;
+        context.animator.SetTrigger("Charge");
+        SFXController.Instance.PlaySFX(context.chargeSound);
+        context.isInvincible = true;
     }
     public override void UpdateState(PlayerController context) 
     {
@@ -21,7 +21,6 @@ public class ChargeState : PlayerState
     }
     public override void LeaveState(PlayerController context) 
     {
-        context.animator.SetBool("isCharging", false);
         SFXController.Instance.StopSFX();
     }
 

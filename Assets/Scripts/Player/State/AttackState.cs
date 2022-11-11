@@ -24,11 +24,11 @@ public class AttackState : PlayerState
         {
             target = ray.transform.gameObject;
         }
-        else if (Physics.SphereCast(context.transform.position - (aimDirection * 4), 5, aimDirection, out ray, 17, context.homingTargets))
+        else if (Physics.SphereCast(context.transform.position - (aimDirection * 4), 5, aimDirection, out ray, 20, context.homingTargets))
         {  
             target = ray.transform.gameObject;
         }
-        else if (Physics.SphereCast(context.transform.position - (aimDirection * 9), 10, aimDirection, out ray, 20, context.homingTargets))
+        else if (Physics.SphereCast(context.transform.position - (aimDirection * 9), 10, aimDirection, out ray, 25, context.homingTargets))
         {  
             target = ray.transform.gameObject;
         }
@@ -59,8 +59,9 @@ public class AttackState : PlayerState
         }
 
         if (target == null) {
-            context.diveCharge = 30;
-            context.ChangeState(context.diveState);
+            Vector3 diveBurst = new Vector3(context.horizontalInput, 0, context.verticalInput).normalized;
+
+            context.rigidBody.AddForce(diveBurst * 40, ForceMode.Impulse);
             context.ChangeState(context.baseState);
             return;
         }
