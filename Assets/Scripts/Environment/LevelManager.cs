@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    [Tooltip("Amount of seconds to complete the level before gameover occurs")][SerializeField]
-    float timeLimit = 120;
+    [Tooltip("Amount of seconds to complete the level before gameover occurs")]
+    public float timeLimit = 120;
     [Tooltip("The cinemachine camera which will become active to show the victory animation")][SerializeField]
     CinemachineVirtualCamera victoryCam;
     [Tooltip("The UI which is shown on victory")][SerializeField]
@@ -35,12 +35,13 @@ public class LevelManager : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
+
+        Score = 0;
+        timeLeft = timeLimit;
     }
 
     void Start()
     {
-        Score = 0;
-        timeLeft = timeLimit;
         Timer = StartCoroutine(CountDown());
     }
 

@@ -101,6 +101,8 @@ public class PlayerController : MonoBehaviour
         isInvincible = false;
         canAttack = true;
         currentState = baseState;
+
+        Menu.isPaused = false;
     }
 
     void FixedUpdate()

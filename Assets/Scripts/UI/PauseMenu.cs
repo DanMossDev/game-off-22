@@ -9,7 +9,6 @@ public class PauseMenu : Menu
 
     new void OnEnable()
     {
-        
         if (NavigationManager.Instance) NavigationManager.Instance.ShowMouse();
         isPaused = true;
         EventSystem.current.SetSelectedGameObject(null);

@@ -9,6 +9,7 @@ public class Menu : MonoBehaviour
     public GameObject options;
     public GameObject optionsFirstButton, optionsClosedButton;
     public static bool isPaused;
+    
     public void OnEnable() 
     {
         if (NavigationManager.Instance) NavigationManager.Instance.ShowMouse();
