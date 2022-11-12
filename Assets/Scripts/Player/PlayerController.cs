@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public DiveState diveState = new DiveState();
     [HideInInspector] public AttackState attackState = new AttackState();
     [HideInInspector] public BoostState boostState = new BoostState();
+    [HideInInspector] public PipeState pipeState = new PipeState();
 
 
 
