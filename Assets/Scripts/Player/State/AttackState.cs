@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AttackState : PlayerState
 {
-    GameObject target;
     float initTime;
     bool playedSound;
     public override void EnterState(PlayerController context) 
@@ -14,25 +13,6 @@ public class AttackState : PlayerState
         context.animator.SetTrigger("Attack");
         context.canAttack = false;
         playedSound = false;
-        Vector3 aimDirection;
-        if (context.horizontalInput == 0 && context.verticalInput == 0) aimDirection = context.transform.forward;
-        else aimDirection = new Vector3(context.horizontalInput, 0, context.verticalInput);
-        aimDirection.Normalize();
-
-        RaycastHit ray;
-        if (Physics.SphereCast(context.transform.position, 3, aimDirection, out ray, 15, context.homingTargets))
-        {
-            target = ray.transform.gameObject;
-        }
-        else if (Physics.SphereCast(context.transform.position - (aimDirection * 4), 5, aimDirection, out ray, 20, context.homingTargets))
-        {  
-            target = ray.transform.gameObject;
-        }
-        else if (Physics.SphereCast(context.transform.position - (aimDirection * 9), 10, aimDirection, out ray, 25, context.homingTargets))
-        {  
-            target = ray.transform.gameObject;
-        }
-        else target = null;
         
         InitAttack(context);
     }
@@ -58,7 +38,7 @@ public class AttackState : PlayerState
             return;
         }
 
-        if (target == null) {
+        if (context.target == null) {
             Vector3 diveBurst = new Vector3(context.horizontalInput, 0, context.verticalInput).normalized;
 
             context.rigidBody.AddForce(diveBurst * 40, ForceMode.Impulse);
@@ -70,10 +50,11 @@ public class AttackState : PlayerState
             playedSound = true;
         }
 
-        context.rigidBody.velocity = (target.transform.position - context.transform.position) * 10;
+        context.rigidBody.velocity = (context.target.transform.position - context.transform.position) * 10;
     }
     public override void LeaveState(PlayerController context) 
     {
+        context.target = null;
         context.rigidBody.useGravity = true;
         context.EndInvincibility();
     }
@@ -102,7 +83,7 @@ public class AttackState : PlayerState
     void Rotate(PlayerController context)
     {
         Quaternion toRotation;
-        if (target != null) toRotation = Quaternion.LookRotation(new Vector3(target.transform.position.x - context.transform.position.x, 0, target.transform.position.z - context.transform.position.z), Vector3.up);
+        if (context.target != null) toRotation = Quaternion.LookRotation(new Vector3(context.target.transform.position.x - context.transform.position.x, 0, context.target.transform.position.z - context.transform.position.z), Vector3.up);
         else if (context.horizontalInput == 0 && context.verticalInput == 0) return;
         else toRotation = Quaternion.LookRotation(new Vector3(context.horizontalInput, 0, context.verticalInput), Vector3.up);
         context.transform.rotation = Quaternion.RotateTowards(context.transform.rotation, toRotation, context.rotationSpeed * 4 * Time.deltaTime);

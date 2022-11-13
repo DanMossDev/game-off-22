@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask hazard;
     [Tooltip("Layers which the homing attack will target")]
     public LayerMask homingTargets;
+    [Tooltip("The targetting reticle")]
+    public GameObject reticle;
 
     [Space][Header("Audio")]
     public AudioClip[] jumpSound;
@@ -55,6 +57,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public BoxCollider boxColl;
     [HideInInspector] public HPManager hitPoints;
     [HideInInspector] public Animator animator;
+    [HideInInspector] public GameObject target;
 
     //Variables
     [HideInInspector] public float horizontalInput;

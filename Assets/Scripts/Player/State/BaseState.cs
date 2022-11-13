@@ -23,6 +23,7 @@ public class BaseState : PlayerState
             if (!context.animator.GetBool("isGrounded")) SFXController.Instance.PlaySFX(context.landSound);
             context.animator.SetBool("isGrounded", true);
         } else {
+            LookForTarget(context);
             context.isGrounded = false;
             context.animator.SetBool("isGrounded", false);
         }
@@ -38,6 +39,7 @@ public class BaseState : PlayerState
     }
     public override void LeaveState(PlayerController context) 
     {
+        context.reticle.SetActive(false);
         context.animator.SetBool("isSkidding", false);
     }
 
@@ -84,6 +86,34 @@ public class BaseState : PlayerState
         SFXController.Instance.PlaySFX(context.jumpSound);
         float impulse = Mathf.Sqrt(context.jumpHeight * -2 * Physics.gravity.y);
         context.rigidBody.AddForce(new Vector3(0, impulse, 0), ForceMode.VelocityChange);
+    }
+
+    void LookForTarget(PlayerController context)
+    {
+        Vector3 aimDirection;
+        if (context.horizontalInput == 0 && context.verticalInput == 0) aimDirection = context.transform.forward;
+        else aimDirection = new Vector3(context.horizontalInput, 0, context.verticalInput);
+        aimDirection.Normalize();
+        RaycastHit ray;
+        if (Physics.SphereCast(context.transform.position, 3, aimDirection, out ray, 15, context.homingTargets))
+        {
+            context.target = ray.transform.gameObject;
+        }
+        else if (Physics.SphereCast(context.transform.position - (aimDirection * 4), 5, aimDirection, out ray, 20, context.homingTargets))
+        {  
+            context.target = ray.transform.gameObject;
+        }
+        else if (Physics.SphereCast(context.transform.position - (aimDirection * 9), 10, aimDirection, out ray, 25, context.homingTargets))
+        {  
+            context.target = ray.transform.gameObject;
+        }
+        else context.target = null;
+
+        if (context.target != null) 
+        {
+            context.reticle.SetActive(true);
+            context.reticle.transform.position = context.target.transform.position;
+        } else context.reticle.SetActive(false);
     }
 
 }
