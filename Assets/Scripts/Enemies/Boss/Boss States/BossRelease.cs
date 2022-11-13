@@ -11,6 +11,8 @@ public class BossRelease : BossState
         //Set an animation
         target = context.player.transform.position;
         lerp = 0;
+
+        context.animator.SetTrigger("attack");
     }
     public override void UpdateState(BossController context) 
     {
@@ -18,6 +20,9 @@ public class BossRelease : BossState
         for (int i = 0; i < context.Spheres.Length; i++)
         {
             context.Spheres[i].transform.position = Vector3.Lerp(context.head.transform.position, target, (lerp - (i * 0.105f)));
+
+            //TYLER
+            context.Spheres[i].GetComponentInChildren<Animator>().SetTrigger("curl");
         }
 
         if (lerp >= 1) context.BecomeExhausted();

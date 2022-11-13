@@ -17,6 +17,10 @@ public class BossCharge : BossState
             sphere.GetComponent<BossTarget>().BecomeUntargettable();
         }
         //Make spheres go into a ring above their head and begin an animation
+
+        //TYLER
+        context.animator.SetTrigger("charge");
+
     }
     public override void UpdateState(BossController context) 
     {

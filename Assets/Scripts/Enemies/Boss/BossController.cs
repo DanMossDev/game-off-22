@@ -18,10 +18,11 @@ public class BossController : MonoBehaviour
     public GameObject[] Spheres;
     public GameObject head;
 
+    [HideInInspector] public Animator animator;
+
     [HideInInspector] public bool damagedThisCycle = false;
     [HideInInspector] public List<Vector3> sphereStartingPos = new List<Vector3>();
     float lerp;
-
 
     [HideInInspector] public BossState currentState;
     [HideInInspector] public BossBase baseState = new BossBase();
@@ -36,6 +37,9 @@ public class BossController : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
+
+        //TYLER
+        animator = GetComponent<Animator>();
     }
 
     void Start()
