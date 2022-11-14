@@ -11,6 +11,7 @@ public class ChargeState : PlayerState
         context.animator.SetTrigger("Charge");
         SFXController.Instance.PlaySFX(context.chargeSound);
         context.isInvincible = true;
+        context.diveCharge = context.diveForce;
     }
     public override void UpdateState(PlayerController context) 
     {

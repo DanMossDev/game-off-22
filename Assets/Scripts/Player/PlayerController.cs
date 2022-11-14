@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Force added to the player when diving while moving")]
     public float diveForce = 20;
     [Tooltip("Maximum amount the dive can be charged while stationary")]
-    public float maxDiveCharge = 0;
+    public float maxDiveCharge = 100;
     [Tooltip("Rate at which the dive charges")]
-    public float chargeRate = 0;
+    public float chargeRate = 50;
     [Tooltip("Rate at which the player accelerates")]
     public float acceleration = 10;
     [Tooltip("Ratio by which your speed decreases when not inputting - lower is a greater reduction")][Range(0, 1)]
