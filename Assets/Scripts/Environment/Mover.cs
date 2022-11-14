@@ -39,6 +39,7 @@ public class Mover : MonoBehaviour
         Vector3 direction;
         if (movingTo) direction = moveTo - moveFrom;
         else direction = moveFrom - moveTo;
-        other.gameObject.GetComponent<Rigidbody>().AddForce(direction * moveSpeed / 2, ForceMode.Impulse);
+
+        other.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, direction.y * moveSpeed / 2, 0), ForceMode.Impulse);
     }
 }
