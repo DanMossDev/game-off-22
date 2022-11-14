@@ -84,7 +84,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public PipeState pipeState = new PipeState();
 
 
-
     public static PlayerController Instance {get; private set;}
 
     void Awake()

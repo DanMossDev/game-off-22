@@ -64,7 +64,7 @@ public class VictoryScreen : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(6);
         LevelManager.Instance.LoadNextLevel();
     }
 }

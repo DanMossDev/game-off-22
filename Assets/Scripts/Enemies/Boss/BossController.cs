@@ -38,7 +38,6 @@ public class BossController : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         else Instance = this;
 
-        //TYLER
         animator = GetComponent<Animator>();
     }
 

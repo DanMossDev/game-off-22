@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
     public void GameOver(GameOvers cause)
     {
         Menu.isPaused = true;
-        Invoke("ReloadLevel", 3);
+        Invoke("ReloadLevel", 2);
     }
 
     void ReloadLevel()
@@ -118,7 +118,7 @@ public class LevelManager : MonoBehaviour
     IEnumerator DisplayVictoryScreen()
     {
         while (!PlayerController.Instance.isGrounded) yield return new WaitForFixedUpdate();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2);
         victoryScreen.SetActive(true);
     }
 

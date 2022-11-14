@@ -40,7 +40,7 @@ public class HPManager : MonoBehaviour
             GetComponentInParent<BossController>().Die();
         }
         else {
-            Destroy(gameObject);
+            transform.parent.gameObject.SetActive(false);
             LevelManager.Instance.Score += 200;
         }
     }

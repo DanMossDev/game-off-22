@@ -28,6 +28,6 @@ public class BossSpin : BossState
     void Move(BossController context)
     {
         Vector3 direction = new Vector3(context.player.transform.position.x - context.transform.position.x, 0, context.player.transform.position.z - context.transform.position.z);
-        context.transform.position += direction * Time.deltaTime * context.rushSpeed;
+        context.transform.position += (direction * Time.deltaTime * context.rushSpeed);
     }
 }
