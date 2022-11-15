@@ -43,7 +43,7 @@ public class BaseState : PlayerState
         context.animator.SetBool("isSkidding", false);
     }
 
-    public override void OnDive(PlayerController context, bool isPressed)
+    public override void OnDive(PlayerController context)
     {
         if (context.rigidBody.velocity.magnitude > 30 || !context.isGrounded) context.ChangeState(context.diveState);
         else if (context.isGrounded && context.rigidBody.velocity.magnitude <= 30) context.ChangeState(context.chargeState);

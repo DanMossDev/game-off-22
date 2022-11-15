@@ -146,7 +146,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Menu.isPaused || isVictorious) return;
         if (hitStunned) return;
-        currentState.OnDive(this, value.Get<float>() == 1);
+        if (value.Get<float>() != 1 && currentState != chargeState) return;
+        currentState.OnDive(this);
     }
 
     void OnAttack()

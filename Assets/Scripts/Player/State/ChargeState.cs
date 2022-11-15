@@ -25,7 +25,7 @@ public class ChargeState : PlayerState
         SFXController.Instance.StopSFX();
     }
 
-    public override void OnDive(PlayerController context, bool isPressed)
+    public override void OnDive(PlayerController context)
     {
         context.ChangeState(context.diveState);
     }

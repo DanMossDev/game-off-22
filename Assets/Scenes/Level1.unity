@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2735.0625, g: 2733.7773, b: 3821.5625, a: 1}
+  m_IndirectSpecularColor: {r: 2735.0625, g: 2733.8633, b: 3821.5625, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2574,7 +2574,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168281251}
-  m_LocalRotation: {x: 0.121539876, y: 0.000000007395305, z: -9.055376e-10, w: 0.99258655}
+  m_LocalRotation: {x: 0.12153988, y: -4.2181892e-14, z: 5.214975e-15, w: 0.99258655}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -26455,7 +26455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 6
-  diveForce: 15
+  diveForce: 8
   maxDiveCharge: 100
   chargeRate: 50
   acceleration: 12

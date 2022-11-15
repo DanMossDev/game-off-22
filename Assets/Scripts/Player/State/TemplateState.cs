@@ -8,6 +8,6 @@ public class TemplateState : PlayerState
     public override void UpdateState(PlayerController context) {}
     public override void LeaveState(PlayerController context) {}
     public override void OnAttack(PlayerController context) {}
-    public override void OnDive(PlayerController context, bool isPressed) {}
+    public override void OnDive(PlayerController context) {}
     public override void OnCollision(PlayerController context, Collision other) {}
 }

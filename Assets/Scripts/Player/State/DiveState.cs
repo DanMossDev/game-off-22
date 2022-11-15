@@ -47,8 +47,10 @@ public class DiveState : PlayerState
         context.EndInvincibility();
     }
 
-    public override void OnDive(PlayerController context, bool isPressed)
-    {}
+    public override void OnDive(PlayerController context)
+    {
+        if (context.isGrounded) context.ChangeState(context.baseState);
+    }
     public override void OnAttack(PlayerController context)
     {}
     public override void OnCollision(PlayerController context, Collision other)
@@ -65,8 +67,9 @@ public class DiveState : PlayerState
     void Movement(PlayerController context)
     {   
         Vector3 movement = new Vector3(context.horizontalInput, 0, context.verticalInput).normalized;
-        if (Utils.CompareVector3(movement, context.rigidBody.velocity.normalized, 0.2f)) return;
-        context.rigidBody.AddForce(movement * context.acceleration / 4, ForceMode.Force);
+        float ySpeed = context.rigidBody.velocity.y;
+        Vector3 rotatedMovement = Vector3.RotateTowards(new Vector3(context.rigidBody.velocity.x, 0, context.rigidBody.velocity.z), movement, context.rotationSpeed * Time.deltaTime, 0);
+        context.rigidBody.velocity = new Vector3(rotatedMovement.x, ySpeed, rotatedMovement.z);
     }
 
     void Rotate(PlayerController context)
