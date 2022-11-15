@@ -12,6 +12,8 @@ public class LevelManager : MonoBehaviour
     CinemachineVirtualCamera victoryCam;
     [Tooltip("The UI which is shown on victory")][SerializeField]
     GameObject victoryScreen;
+    [Tooltip("The loading screen")][SerializeField]
+    GameObject loadingScreen;
     [HideInInspector] public float timeLeft;
     [HideInInspector] public int Score = 0;
 
@@ -64,7 +66,8 @@ public class LevelManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        loadingScreen.SetActive(true);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void LevelComplete()

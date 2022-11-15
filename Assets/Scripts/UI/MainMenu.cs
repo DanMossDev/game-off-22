@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : Menu
 {
+    [Tooltip("The loading screen")][SerializeField]
+    GameObject loadingScreen;
     public void Begin()
     {
-        SceneManager.LoadScene(1);
+        loadingScreen.SetActive(true);
+        SceneManager.LoadSceneAsync(1);
     }
 }
