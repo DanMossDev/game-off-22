@@ -982,7 +982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcf00e2e5807f24ea89cfb1730097fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agroRange: 30
+  agroRange: 45
   shotCD: 1.5
   hooks:
   - {fileID: 3669801493275238795}
