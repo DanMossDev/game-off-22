@@ -7,8 +7,6 @@ public class BaseState : PlayerState
     float lastFootstepTime;
     public override void EnterState(PlayerController context) 
     {
-        context.capColl.enabled = true;
-        context.boxColl.enabled = false;
         lastFootstepTime = Time.time;
     }
     public override void UpdateState(PlayerController context) 
@@ -56,6 +54,7 @@ public class BaseState : PlayerState
 
     public override void OnCollision(PlayerController context, Collision other)
     {
+        if (((context.water & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)) context.ChangeState(context.waterState);
         if ((other.gameObject.layer == LayerMask.NameToLayer("Enemy") || other.gameObject.layer == LayerMask.NameToLayer("Boss")) && !context.isInvincible)
         {
             context.TakeDamage(other);

@@ -2,31 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DiveState : PlayerState
+public class WaterDiveState : PlayerState
 {
     public override void EnterState(PlayerController context) 
     {
         context.isInvincible = true;
         context.boxColl.enabled = true;
         context.capColl.enabled = false;
+
         SFXController.Instance.PlaySFX(context.diveSound);
-        context.animator.SetTrigger("Dive");
         context.animator.SetBool("isDiving", true);
+        context.animator.SetTrigger("Dive");
 
         Vector3 diveBurst;
         if (context.horizontalInput == 0 && context.verticalInput == 0) diveBurst = context.transform.forward;
         else diveBurst = new Vector3(context.horizontalInput, 0, context.verticalInput).normalized;
-        float force;
-        if (context.diveCharge == 0) force = context.diveForce * 40 / (Mathf.Abs(context.rigidBody.velocity.magnitude) + 10);
-        else {
-            force = context.diveCharge;
-            context.diveCharge = 0;
-        }
+        float force = context.diveForce * 40 / (Mathf.Abs(context.rigidBody.velocity.magnitude) + 10);
         context.rigidBody.AddForce(diveBurst * force, ForceMode.Impulse);
     }
     public override void UpdateState(PlayerController context) 
     {
-        if (Physics.OverlapSphere(context.belly.position, 0.2f, context.ground).Length != 0) 
+        if (Physics.OverlapSphere(context.belly.position, 0.2f, context.water).Length != 0) 
         {
             context.animator.SetBool("isGrounded", true);
             context.isGrounded = true;
@@ -51,13 +47,12 @@ public class DiveState : PlayerState
 
     public override void OnDive(PlayerController context)
     {
-        if (context.isGrounded) context.ChangeState(context.baseState);
+        if (context.isGrounded) context.ChangeState(context.waterState);
     }
     public override void OnAttack(PlayerController context)
     {}
     public override void OnCollision(PlayerController context, Collision other)
     {
-        if (((context.water & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)) context.ChangeState(context.waterState);
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) other.gameObject.GetComponent<HPManager>().TakeDamage();
         if (other.gameObject.layer == LayerMask.NameToLayer("Boss")) context.TakeDamage(other);
     }

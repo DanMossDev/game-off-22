@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     public Transform belly;
     [Tooltip("Layers which will be considered as grounded, i.e. things you can jump off")]
     public LayerMask ground;
+    [Tooltip("Layers which will be considered as water, i.e. things you will drown in if moving too slow")]
+    public LayerMask water;
     [Tooltip("Layers which will be considered as hazards, i.e. things on the stage that hurt you")]
     public LayerMask hazard;
     [Tooltip("Layers which the homing attack will target")]
@@ -76,12 +78,15 @@ public class PlayerController : MonoBehaviour
 
     //States
     [HideInInspector] public PlayerState currentState;
+    [HideInInspector] public PlayerState previousState;
     [HideInInspector] public BaseState baseState = new BaseState();
     [HideInInspector] public ChargeState chargeState = new ChargeState();
     [HideInInspector] public DiveState diveState = new DiveState();
     [HideInInspector] public AttackState attackState = new AttackState();
     [HideInInspector] public BoostState boostState = new BoostState();
     [HideInInspector] public PipeState pipeState = new PipeState();
+    [HideInInspector] public WaterState waterState = new WaterState();
+    [HideInInspector] public WaterDiveState waterDiveState = new WaterDiveState();
 
 
     public static PlayerController Instance {get; private set;}
@@ -103,6 +108,7 @@ public class PlayerController : MonoBehaviour
         isInvincible = false;
         canAttack = true;
         currentState = baseState;
+        previousState = currentState;
 
         Menu.isPaused = false;
     }
@@ -115,6 +121,7 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeState(PlayerState state)
     {
+        previousState = currentState;
         currentState.LeaveState(this);
         currentState = state;
         currentState.EnterState(this);
@@ -159,13 +166,19 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision other) {
         if (isVictorious) return;
-        if ((ground & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) return;
-        if ((hazard & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) {
+        if ((hazard & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)
+        {
             TakeDamage(other);
             return;
         }
 
         currentState.OnCollision(this, other);
+    }
+
+    public void Drown()
+    {
+        //Handle drowning, probably call in to HP manager's die function
+        print("You have drowned");
     }
 
     public void TakeDamage(Collision other)
