@@ -38,7 +38,8 @@ public class DiveState : PlayerState
             context.isGrounded = false;
         }
         if (context.horizontalInput == 0 && context.verticalInput == 0) return;
-        Movement(context);
+        if (Time.time - context.lastGroundedTime < 0.25f) Slide(context);
+        else Glide(context);
         Rotate(context);
     }
     public override void LeaveState(PlayerController context)
@@ -51,7 +52,7 @@ public class DiveState : PlayerState
 
     public override void OnDive(PlayerController context)
     {
-        if (context.isGrounded) context.ChangeState(context.baseState);
+        if (Time.time - context.lastGroundedTime < 0.5f) context.ChangeState(context.baseState);
     }
     public override void OnAttack(PlayerController context)
     {}
@@ -62,7 +63,16 @@ public class DiveState : PlayerState
         if (other.gameObject.layer == LayerMask.NameToLayer("Boss")) context.TakeDamage(other);
     }
 
-    void Movement(PlayerController context)
+    void Glide(PlayerController context)
+    {
+        if (context.horizontalInput == 0 || Mathf.Sign(context.rigidBody.velocity.x) != Mathf.Sign(context.horizontalInput)) context.rigidBody.velocity = new Vector3(context.rigidBody.velocity.x * context.stoppingDrag, context.rigidBody.velocity.y, context.rigidBody.velocity.z);
+        if (context.verticalInput == 0 || Mathf.Sign(context.rigidBody.velocity.z) != Mathf.Sign(context.verticalInput)) context.rigidBody.velocity = new Vector3(context.rigidBody.velocity.x, context.rigidBody.velocity.y, context.rigidBody.velocity.z * context.stoppingDrag);
+        
+        Vector3 movement = new Vector3(context.horizontalInput * context.acceleration * (30 / (Mathf.Abs(context.rigidBody.velocity.x) + 10)), 0, context.verticalInput * context.acceleration * (30 / (Mathf.Abs(context.rigidBody.velocity.z) + 10)));
+        context.rigidBody.AddForce(movement, ForceMode.Force);
+    }
+
+    void Slide(PlayerController context)
     {   
         Vector3 movement = new Vector3(context.horizontalInput, 0, context.verticalInput).normalized;
         float ySpeed = context.rigidBody.velocity.y;
