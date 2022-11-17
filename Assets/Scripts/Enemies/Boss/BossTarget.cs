@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class BossTarget : MonoBehaviour
 {
-    MeshRenderer meshRenderer;
+    SkinnedMeshRenderer meshRenderer;
 
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }
     public void OnHit()
     {
         gameObject.layer = 0;
         meshRenderer.enabled = false;
-        transform.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
         StartCoroutine(Restore());
     }
 
@@ -24,7 +23,6 @@ public class BossTarget : MonoBehaviour
         if (BossController.Instance.currentState == BossController.Instance.spinState) gameObject.layer = LayerMask.NameToLayer("Boss");
         else gameObject.layer = LayerMask.NameToLayer("Target");
         meshRenderer.enabled = true;
-        transform.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
     }
 
     public void BecomeUntargettable()

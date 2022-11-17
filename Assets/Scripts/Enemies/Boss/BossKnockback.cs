@@ -8,7 +8,7 @@ public class BossKnockback : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            other.gameObject.GetComponent<PlayerController>().ApplyHitstun(other.contacts[0].normal * -1);
+            other.gameObject.GetComponent<PlayerController>().ApplyHitstun(new Vector3(other.contacts[0].normal.x * 3, other.contacts[0].normal.y, other.contacts[0].normal.z * 3).normalized * -1);
 
             BossController.Instance.animator.SetTrigger("hit");
 

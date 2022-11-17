@@ -54,7 +54,7 @@ public class WaterDiveState : PlayerState
     public override void OnCollision(PlayerController context, Collision other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) other.gameObject.GetComponent<HPManager>().TakeDamage();
-        if (other.gameObject.layer == LayerMask.NameToLayer("Boss")) context.TakeDamage(other);
+        if (other.gameObject.layer == LayerMask.NameToLayer("Boss")) context.rigidBody.AddForce((other.contacts[0].normal + Vector3.up) * context.hitBounce, ForceMode.Impulse);
     }
 
     void Movement(PlayerController context)

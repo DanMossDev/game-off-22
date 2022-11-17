@@ -34,6 +34,7 @@ public class BoostState : PlayerState
     public override void OnDive(PlayerController context) {}
     public override void OnCollision(PlayerController context, Collision other) 
     {
+        if ((context.ground & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) return;
         context.ChangeState(context.baseState);
     }
 

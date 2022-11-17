@@ -35,7 +35,7 @@ public class WaterState : PlayerState
         if ((context.ground & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) context.ChangeState(context.baseState);
         if ((other.gameObject.layer == LayerMask.NameToLayer("Enemy") || other.gameObject.layer == LayerMask.NameToLayer("Boss")) && !context.isInvincible)
         {
-            context.TakeDamage(other);
+            context.rigidBody.AddForce((other.contacts[0].normal + Vector3.up) * context.hitBounce, ForceMode.Impulse);
         }
     }
 
