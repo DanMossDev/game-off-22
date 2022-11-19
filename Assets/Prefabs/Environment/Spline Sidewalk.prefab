@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3239696531637606103}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11, y: 0, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -47,33 +47,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodes:
-  - position: {x: 116.86221, y: 0, z: 47.265053}
-    direction: {x: 111.31566, y: 0, z: 47.48634}
+  - position: {x: 0, y: 0, z: 0}
+    direction: {x: 0, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
     scale: {x: 1, y: 1}
     roll: 0
-  - position: {x: 90.26767, y: 0, z: 48.65796}
-    direction: {x: 84.56526, y: 0, z: 48.66525}
+  - position: {x: 0, y: 0, z: 140}
+    direction: {x: 0, y: 0, z: 140}
     up: {x: 0, y: 1, z: 0}
     scale: {x: 1, y: 1}
     roll: 0
   curves:
   - n1:
-      position: {x: 116.86221, y: 0, z: 47.265053}
-      direction: {x: 111.31566, y: 0, z: 47.48634}
+      position: {x: 0, y: 0, z: 0}
+      direction: {x: 0, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       scale: {x: 1, y: 1}
       roll: 0
     n2:
-      position: {x: 90.26767, y: 0, z: 48.65796}
-      direction: {x: 84.56526, y: 0, z: 48.66525}
+      position: {x: 0, y: 0, z: 140}
+      direction: {x: 0, y: 0, z: 140}
       up: {x: 0, y: 1, z: 0}
       scale: {x: 1, y: 1}
       roll: 0
     Changed:
       m_PersistentCalls:
         m_Calls: []
-  Length: 26.633099
+  Length: 140
   isLoop: 0
   CurveChanged:
     m_PersistentCalls:
