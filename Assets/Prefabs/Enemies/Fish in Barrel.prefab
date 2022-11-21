@@ -357,7 +357,6 @@ GameObject:
   - component: {fileID: 2106185966410325415}
   - component: {fileID: 2106185966410325411}
   - component: {fileID: 2106185966410325408}
-  - component: {fileID: 6366879309867379359}
   m_Layer: 10
   m_Name: Fish in Barrel Logic
   m_TagString: Untagged
@@ -443,26 +442,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   target: {fileID: 0}
---- !u!95 &6366879309867379359
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2106185966410325414}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 681e042fe2275b6468e09bf93971755e, type: 3}
-  m_Controller: {fileID: 9100000, guid: c97e89b9913cac043a369d29f093e7f9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2106185966978386332
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,6 +451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2106185966978386333}
+  - component: {fileID: 4143038745407408945}
   m_Layer: 0
   m_Name: Fish in Barrel
   m_TagString: Untagged
@@ -497,6 +477,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &4143038745407408945
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106185966978386332}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 681e042fe2275b6468e09bf93971755e, type: 3}
+  m_Controller: {fileID: 9100000, guid: c97e89b9913cac043a369d29f093e7f9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3669801493275238795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,7 +1123,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 681e042fe2275b6468e09bf93971755e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 681e042fe2275b6468e09bf93971755e,
         type: 3}
@@ -1179,32 +1179,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2430662199323456954}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3276962146216954091 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 681e042fe2275b6468e09bf93971755e,
-    type: 3}
-  m_PrefabInstance: {fileID: 2430662199323456954}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &8238669573313762911
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3276962146216954091}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 681e042fe2275b6468e09bf93971755e, type: 3}
-  m_Controller: {fileID: 9100000, guid: c97e89b9913cac043a369d29f093e7f9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &5167734573960224132
 PrefabInstance:
   m_ObjectHideFlags: 0

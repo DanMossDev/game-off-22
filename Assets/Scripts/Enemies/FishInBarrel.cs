@@ -18,7 +18,7 @@ public class FishInBarrel : MonoBehaviour
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInParent<Animator>();
     }
 
     void FixedUpdate()
@@ -41,7 +41,6 @@ public class FishInBarrel : MonoBehaviour
             if (Time.time - lastShotTime >= shotCD)
             {
                 animator.SetTrigger("Attack");
-                animator.ResetTrigger("Attack");
                 for (int i = 0; i < hooks.Length; i++)
                 {
                     if (!hooks[i].activeSelf)
@@ -53,6 +52,7 @@ public class FishInBarrel : MonoBehaviour
                         break;
                     }
                 }
+                animator.ResetTrigger("Attack");
             }
             return;
         }
