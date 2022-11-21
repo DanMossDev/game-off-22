@@ -21,10 +21,10 @@ There are a variety of movement options to maintain speed, for example while mov
 
 
 ## The Team
-Developers:
-<a href="https://github.com/DanMossDev">Daniel Moss</a>
-<a href="https://github.com/sbb12">Sercan Sokmen</a>
+Developers: <br>
+<a href="https://github.com/DanMossDev">Daniel Moss</a> <br>
+<a href="https://github.com/sbb12">Sercan Sokmen</a> <br>
 
-Artists:
-<a href="https://github.com/Gameghoul">Gameghoul</a>
-Wilko
+Artists: <br>
+<a href="https://github.com/Gameghoul">Gameghoul</a> <br>
+Wilko <br>
