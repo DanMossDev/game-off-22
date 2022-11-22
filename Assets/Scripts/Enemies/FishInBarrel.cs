@@ -8,7 +8,9 @@ public class FishInBarrel : MonoBehaviour
     float agroRange = 15;
     [Tooltip("Time taken between spotting the player and attacking")][SerializeField] 
     float shotCD = 1.5f;
-    [SerializeField] GameObject[] hooks;
+    [Tooltip("Offset between the attack animation and the attack itself")][SerializeField] 
+    float animOffset = 0.2f;
+    [SerializeField] GameObject[] kisses;
     [SerializeField] LayerMask playerLayer;
 
     public GameObject target;
@@ -40,19 +42,15 @@ public class FishInBarrel : MonoBehaviour
 
             if (Time.time - lastShotTime >= shotCD)
             {
-                animator.SetTrigger("Attack");
-                for (int i = 0; i < hooks.Length; i++)
+                for (int i = 0; i < kisses.Length; i++)
                 {
-                    if (!hooks[i].activeSelf)
+                    if (!kisses[i].activeSelf)
                     {
-                        hooks[i].SetActive(true);
-                        Vector3 targetVel = target.GetComponentInParent<Rigidbody>().velocity;
-                        hooks[i].GetComponent<Smooch>().target = target.transform.position + (Vector3.ClampMagnitude(new Vector3(targetVel.x, targetVel.y / 5, targetVel.z), 30)) + Vector3.up;
-                        lastShotTime = Time.time;
+                        lastShotTime = Time.time + animOffset;
+                        StartCoroutine(ShootKiss(kisses[i]));
                         break;
                     }
                 }
-                animator.ResetTrigger("Attack");
             }
             return;
         }
@@ -64,5 +62,16 @@ public class FishInBarrel : MonoBehaviour
     {
         Vector3 toPlayer = new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toPlayer, Vector3.up), 360 * Time.deltaTime);
+    }
+
+    IEnumerator ShootKiss(GameObject kiss)
+    {
+        print("Getting here");
+        animator.ResetTrigger("Attack");
+        animator.SetTrigger("Attack");
+        yield return new WaitForSeconds(animOffset);
+        kiss.SetActive(true);
+        Vector3 targetVel = target.GetComponentInParent<Rigidbody>().velocity;
+        kiss.GetComponent<Smooch>().target = target.transform.position + (Vector3.ClampMagnitude(new Vector3(targetVel.x, targetVel.y / 5, targetVel.z), 30)) + Vector3.up;
     }
 }
