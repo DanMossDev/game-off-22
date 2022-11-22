@@ -70,8 +70,11 @@ public class FishInBarrel : MonoBehaviour
         animator.ResetTrigger("Attack");
         animator.SetTrigger("Attack");
         yield return new WaitForSeconds(animOffset);
-        kiss.SetActive(true);
-        Vector3 targetVel = target.GetComponentInParent<Rigidbody>().velocity;
-        kiss.GetComponent<Smooch>().target = target.transform.position + (Vector3.ClampMagnitude(new Vector3(targetVel.x, targetVel.y / 5, targetVel.z), 30)) + Vector3.up;
+        if (target != null)
+        {
+            kiss.SetActive(true);
+            Vector3 targetVel = target.GetComponentInParent<Rigidbody>().velocity;
+            kiss.GetComponent<Smooch>().target = target.transform.position + (Vector3.ClampMagnitude(new Vector3(targetVel.x, targetVel.y / 5, targetVel.z), 30)) + Vector3.up;
+        }
     }
 }

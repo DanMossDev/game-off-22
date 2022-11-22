@@ -8,7 +8,7 @@ public class BossCamera : MonoBehaviour
     [SerializeField] GameObject boss;
     [SerializeField] GameObject player;
 
-    void Update()
+    void FixedUpdate()
     {
         Vector3 direction = new Vector3(boss.transform.position.x - player.transform.position.x, -2, boss.transform.position.z - player.transform.position.z).normalized;
 
