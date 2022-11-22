@@ -9,6 +9,6 @@ public class HalfpipeTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        halfpipeCam.enabled = !halfpipeCam.enabled;
+        halfpipeCam.enabled = true;
     }
 }
