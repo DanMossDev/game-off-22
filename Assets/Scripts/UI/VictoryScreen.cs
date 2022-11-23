@@ -27,7 +27,6 @@ public class VictoryScreen : MonoBehaviour
         totalScoreValue = (timeRemainingValue * 100) + levelScoreValue;
 
         StartCoroutine(RevealTime());
-
     }
 
     IEnumerator RevealTime()

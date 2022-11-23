@@ -9,7 +9,7 @@ public class CheckpointManager : MonoBehaviour
     int sceneIndex;
     [HideInInspector] public Vector3 playerLoadPoint;
     [HideInInspector] public int score;
-    [HideInInspector] public float timeSpent;
+    [HideInInspector] public int timeSpent;
 
 
     public static CheckpointManager Instance {get; private set;}
