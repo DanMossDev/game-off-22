@@ -46,6 +46,8 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         Timer = StartCoroutine(CountDown());
+
+        if (SceneManager.GetActiveScene().buildIndex <= 1) ScoreHolder.Score = 0;
     }
 
     void Update()
@@ -74,6 +76,7 @@ public class LevelManager : MonoBehaviour
 
     public void LevelComplete()
     {
+        StopTimer();
         PlayerController.Instance.isVictorious = true;
         PlayerController.Instance.rigidBody.velocity = Vector3.zero;
         PlayerController.Instance.animator.SetTrigger("Victory");
@@ -103,8 +106,7 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(2);
         victoryScreen.SetActive(true);
 
-        Score = Score + (timeLeft * 100);
-
+        Score += timeLeft * 100;
         switch (Score)
         {
             case int n when n >= Sscore:
@@ -136,6 +138,8 @@ public class LevelManager : MonoBehaviour
                 print("F grade");
                 break;
         }
+        ScoreHolder.Score += Score;
+        print(ScoreHolder.Score);
     }
 
 }

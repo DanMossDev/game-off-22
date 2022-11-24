@@ -8,5 +8,6 @@ public class VictoryTrigger : MonoBehaviour
     {
         other.GetComponent<PlayerController>().ChangeState(PlayerController.Instance.baseState);
         LevelManager.Instance.LevelComplete();
+        gameObject.SetActive(false);
     }
 }

@@ -120,8 +120,8 @@ public class BossController : MonoBehaviour
 
     IEnumerator Death()
     {
-        yield return new WaitForSeconds(2);
         LevelManager.Instance.LevelComplete();
+        yield return new WaitForSeconds(2);
         gameObject.SetActive(false);
     }
 }
