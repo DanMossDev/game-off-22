@@ -13,7 +13,7 @@ public class VictoryScreen : MonoBehaviour
     [SerializeField] TextMeshProUGUI levelScore;
     [SerializeField] TextMeshProUGUI totalScore;
     [SerializeField] GameObject gradeObject;
-    [SerializeField] Image grade;
+    [SerializeField] TextMeshProUGUI grade;
     [SerializeField] GameObject levelUI;
 
     int timeRemainingValue;
@@ -62,7 +62,9 @@ public class VictoryScreen : MonoBehaviour
             }
             yield return new WaitForFixedUpdate();
         }
-
+        yield return new WaitForSeconds(1);
+        gradeObject.SetActive(true);
+        grade.text = LevelManager.Instance.Grade;
         yield return new WaitForSeconds(6);
         LevelManager.Instance.LoadNextLevel();
     }

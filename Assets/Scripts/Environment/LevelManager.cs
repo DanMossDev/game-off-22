@@ -62,7 +62,8 @@ public class LevelManager : MonoBehaviour
 
     void ReloadLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        loadingScreen.SetActive(true);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void LoadNextLevel()
@@ -74,6 +75,7 @@ public class LevelManager : MonoBehaviour
     public void LevelComplete()
     {
         PlayerController.Instance.isVictorious = true;
+        PlayerController.Instance.rigidBody.velocity = Vector3.zero;
         PlayerController.Instance.animator.SetTrigger("Victory");
         victoryCam.enabled = true;
         StartCoroutine(DisplayVictoryScreen());
