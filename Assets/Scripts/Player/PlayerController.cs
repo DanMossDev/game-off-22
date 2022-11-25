@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public HPManager hitPoints;
     [HideInInspector] public Animator animator;
     [HideInInspector] public GameObject target;
+    [HideInInspector] public Transform pipeCenter;
 
     //Variables
     [HideInInspector] public float horizontalInput;
