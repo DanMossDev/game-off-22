@@ -92,7 +92,7 @@ MonoBehaviour:
   active: 0
   rotation:
     m_OverrideState: 1
-    m_Value: 14
+    m_Value: 0
   skyIntensityMode:
     m_OverrideState: 1
     m_Value: 0
