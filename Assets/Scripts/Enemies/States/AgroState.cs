@@ -6,6 +6,7 @@ public class AgroState : EnemyState
 {
     public override void EnterState(EnemyController context) 
     {
+        context.anim.SetBool("isAggro", true);
     }
     public override void UpdateState(EnemyController context) 
     {

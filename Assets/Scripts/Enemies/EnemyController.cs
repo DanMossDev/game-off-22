@@ -12,6 +12,8 @@ public class EnemyController : MonoBehaviour
     public Transform[] patrolPoints;
     public EnemyBehaviour behaviour;
 
+    public Animator anim;
+
     //Cached references
     [HideInInspector] public GameObject target;
     [HideInInspector] public CharacterController charController;
@@ -25,6 +27,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        anim = transform.GetComponent<Animator>();
         target = PlayerController.Instance.gameObject;
         charController = GetComponent<CharacterController>();
         currentState = patrolState;

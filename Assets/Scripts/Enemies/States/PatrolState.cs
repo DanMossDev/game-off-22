@@ -7,6 +7,8 @@ public class PatrolState : EnemyState
     int nextPosition = 0;
     public override void EnterState(EnemyController context) 
     {
+        
+        context.anim.SetBool("isAggro", false);
         if (context.patrolPoints.Length > 1)
         {
             nextPosition = 0;
