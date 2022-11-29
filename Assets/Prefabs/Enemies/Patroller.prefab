@@ -233,7 +233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3240759513262986268}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 191686766201586076}
   - component: {fileID: 5497780675847943835}
   - component: {fileID: 8078534586128874839}
+  - component: {fileID: 4485030464076462158}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
@@ -303,7 +304,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6661550985310326911}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -345,7 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7894fd3ac34469d4da91646f42276ec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agroRange: 15
+  agroRange: 40
   patrolSpeed: 5
   chaseSpeed: 15
   patrolPoints:
@@ -354,6 +355,7 @@ MonoBehaviour:
   - {fileID: 3240759513358632801}
   - {fileID: 3240759511906382464}
   behaviour: 0
+  anim: {fileID: 0}
   target: {fileID: 0}
   charController: {fileID: 0}
 --- !u!143 &5497780675847943835
@@ -394,6 +396,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &4485030464076462158
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6661550985310326911}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 5, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &7571276672250809086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -414,7 +429,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 09052a6391580ab4e81a4c2b3789d654,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 09052a6391580ab4e81a4c2b3789d654,
         type: 3}
