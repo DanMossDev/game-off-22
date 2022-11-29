@@ -969,10 +969,10 @@ MonoBehaviour:
   isBoss: 1
   currentHP: 0
   deathSound:
-  - {fileID: 8300000, guid: 8ebe4fd31782d5145b198cb6c0b9ccb7, type: 3}
-  - {fileID: 8300000, guid: 886e0173ee6119148b2fa3d861a01f17, type: 3}
-  - {fileID: 8300000, guid: a807df59d8581d545a0b9bce3091b992, type: 3}
-  - {fileID: 8300000, guid: 9b5e19166568d6b48b66865a36d2f5cf, type: 3}
+  - {fileID: 8300000, guid: 46ecdca3840147845b1158c4a1cbc185, type: 3}
+  - {fileID: 8300000, guid: e819933df086807439afec90e3a988e3, type: 3}
+  - {fileID: 8300000, guid: affaf9c949f05e14dad9e10ff327405c, type: 3}
+  - {fileID: 8300000, guid: fb4b1f1bb5d6d5040ba27c60bd623b92, type: 3}
 --- !u!114 &7491460771963617514
 MonoBehaviour:
   m_ObjectHideFlags: 0
