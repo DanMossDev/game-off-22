@@ -18,6 +18,7 @@ There are a variety of movement options to maintain speed, for example while mov
 | Charge (hold)   | East Face Button | Left Control |
 | Dive (release/airborn/moving) | East Face Button | Left Control |
 | Homing Attack (airborn) | West Face Button | Q |
+| Recenter Camera | Left Trigger | Tab |
 
 
 ## The Team
