@@ -165,6 +165,15 @@ public class PlayerController : MonoBehaviour
         currentState.OnAttack(this);
     }
 
+    void OnCamera(InputValue value)
+    {
+        print("Testing 123");
+        if (currentState == pipeState || RecenterCamera.Instance == null) return;
+        
+        if (value.Get<float>() == 1) RecenterCamera.Instance.Recenter();
+        else RecenterCamera.Instance.StopRecentering();
+    }
+
     void OnCollisionEnter(Collision other) {
         if (isVictorious) return;
         if ((hazard & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)
