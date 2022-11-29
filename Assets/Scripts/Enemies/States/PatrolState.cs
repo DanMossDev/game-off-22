@@ -40,10 +40,17 @@ public class PatrolState : EnemyState
         {
             nextPosition = nextPosition == context.patrolPoints.Length - 1 ? 0 : nextPosition + 1;
         }
+        Rotate(context);
         context.charController.Move((context.patrolPoints[nextPosition].position - context.transform.position).normalized * context.patrolSpeed * Time.deltaTime);
     }
     public override void LeaveState(EnemyController context) 
     {
 
+    }
+
+    void Rotate(EnemyController context)
+    {
+        Quaternion toRotation = Quaternion.LookRotation(context.patrolPoints[nextPosition].position - context.transform.position, Vector3.up);
+        context.transform.rotation = Quaternion.RotateTowards(context.transform.rotation, toRotation, 360 * Time.deltaTime);
     }
 }
