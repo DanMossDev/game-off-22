@@ -35,7 +35,6 @@ public class Leaderboards : MonoBehaviour
         while (!operation.isDone) await Task.Yield();
 
         if (webRequest.result == UnityWebRequest.Result.Success) {
-            print(webRequest.downloadHandler.text);
             Highscore[] highscores = Highscore.CreateFromJSON(webRequest.downloadHandler.text);
 
             for (int i = 0; i < 10; i++)
@@ -58,7 +57,6 @@ public class Leaderboards : MonoBehaviour
             return;
         }
         string url = baseURL + "add?name=" + username.text + "&score=" + ScoreHolder.Score;
-        print(url);
 
         using UnityWebRequest webRequest = UnityWebRequest.Get(url);
 
@@ -67,7 +65,6 @@ public class Leaderboards : MonoBehaviour
         while (!operation.isDone) await Task.Yield();
 
         if (webRequest.result == UnityWebRequest.Result.Success) {
-            print("Success!");
             ShowHighscores.Instance.ToggleSubmit();
         }
         else if (webRequest.result == UnityWebRequest.Result.ConnectionError) errorMessage.text = "Couldn't connect to server.";
@@ -117,5 +114,3 @@ public static class JsonHelper
         public T[] Items;
     }
 }
-
-// https://jsonplaceholder.typicode.com/todos/1

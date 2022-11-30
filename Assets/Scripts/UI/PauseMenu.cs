@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : Menu
 { 
@@ -24,5 +25,16 @@ public class PauseMenu : Menu
     public void Resume()
     {
         gameObject.SetActive(false);
+    }
+
+    public void Checkpoint()
+    {
+        LevelManager.Instance.ReloadLevel();
+    }
+
+    public void RestartLevel()
+    {
+        Destroy(CheckpointManager.Instance);
+        LevelManager.Instance.ReloadLevel();
     }
 }

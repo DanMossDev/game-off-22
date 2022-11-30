@@ -62,7 +62,7 @@ public class LevelManager : MonoBehaviour
         Invoke("ReloadLevel", 2);
     }
 
-    void ReloadLevel()
+    public void ReloadLevel()
     {
         loadingScreen.SetActive(true);
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
