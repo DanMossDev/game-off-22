@@ -167,7 +167,6 @@ public class PlayerController : MonoBehaviour
 
     void OnCamera(InputValue value)
     {
-        print("Testing 123");
         if (currentState == pipeState || RecenterCamera.Instance == null) return;
         
         if (value.Get<float>() == 1) RecenterCamera.Instance.Recenter();
@@ -188,7 +187,6 @@ public class PlayerController : MonoBehaviour
     public void Drown()
     {
         //Handle drowning, probably call in to HP manager's die function
-        print("You have drowned");
     }
 
     public void TakeDamage(Collision other)

@@ -111,35 +111,27 @@ public class LevelManager : MonoBehaviour
         {
             case int n when n >= Sscore:
                 Grade = "S";
-                print("S grade");
                 break;
             case int n when n >= Ascore:
                 Grade = "A";
-                print("A grade");
                 break;
             case int n when n >= Bscore:
                 Grade = "B";
-                print("B grade");
                 break;
             case int n when n >= Cscore:
                 Grade = "C";
-                print("C grade");
                 break;
             case int n when n >= Dscore:
                 Grade = "D";
-                print("D grade");
                 break;
             case int n when n >= Escore:
                 Grade = "E";
-                print("E grade");
                 break;
             default:
                 Grade = "F";
-                print("F grade");
                 break;
         }
         ScoreHolder.Score += Score;
-        print(ScoreHolder.Score);
     }
 
 }

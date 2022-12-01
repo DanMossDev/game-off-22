@@ -9,6 +9,8 @@ public class Pickup : MonoBehaviour
     public Pickups pickup;
     [Tooltip("An array of possible audio played by this pickup")][SerializeField]
     AudioClip[] pickupAudio;
+    [Tooltip("Amount of points the pickup is worth")][SerializeField]
+    int value = 2500;
 
 
     CapsuleCollider capsuleCollider;
@@ -28,18 +30,22 @@ public class Pickup : MonoBehaviour
         switch (pickup)
         {
             case Pickups.Toast:
-                LevelManager.Instance.Score += 100;
+                LevelManager.Instance.Score += value;
                 PowerUps.Instance.PowerUp(Pickups.Toast);
+                break;
+            case Pickups.Points:
+                LevelManager.Instance.Score += value;
                 break;
             default:
                 break;
         }
 
-        // SFXController.Instance.PlaySFX(pickupAudio)
+        SFXController.Instance.PlaySFX(pickupAudio);
         Destroy(this.gameObject);
     }
 }
 
 public enum Pickups {
-    Toast
+    Toast,
+    Points
 }

@@ -66,7 +66,6 @@ public class FishInBarrel : MonoBehaviour
 
     IEnumerator ShootKiss(GameObject kiss)
     {
-        print("Getting here");
         animator.ResetTrigger("Attack");
         animator.SetTrigger("Attack");
         yield return new WaitForSeconds(animOffset);

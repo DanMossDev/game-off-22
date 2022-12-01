@@ -11,6 +11,11 @@ public class Smooch : MonoBehaviour
 
     void OnEnable()
     {
+        if (transform.parent == null) 
+        {
+            BecomeInactive();
+            return;
+        }
         transform.position = startPos = transform.parent.transform.position;
         timeShot = Time.time;
     }
